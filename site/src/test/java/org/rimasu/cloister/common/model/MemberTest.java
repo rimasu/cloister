@@ -13,10 +13,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -34,9 +39,9 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.util.fileloader.FlatXmlDataFileLoader;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rimasu.cloister.common.model.ValidationReport.Issue;
 
 /**
  * Test unit for {@link Member}.
@@ -54,6 +59,15 @@ public class MemberTest {
 
 	private DatabaseConnection connection;
 
+	private Validator validator;
+
+	@Before
+	public void beforeEachTest() {
+		ValidatorFactory factory = Validation.byDefaultProvider().configure()
+				.buildValidatorFactory();
+		validator = factory.getValidator();
+	}
+
 	@Test
 	public void canChangeMembersFirstName() {
 		Member member = new Member();
@@ -70,18 +84,19 @@ public class MemberTest {
 
 	@Test
 	public void canCreateAValidationReportFromAMember() {
-		Member member = createPopulatedMember();
-		List<ValidationReport> reports = member.validate();
-		assertNotNull(reports);
-		assertTrue(reports.isEmpty());
+		checkNoReports(createPopulatedMember());
+	}
+
+	private void checkNoReports(Member member) {
+		assertTrue(validator.validate(member).isEmpty());
 	}
 
 	@Test
 	public void nullUuidIsIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setUuid(null);
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, null, "UUID", Issue.NOT_POPULATED);
+	
+		checkReport(member, null, "UUID");
 	}
 
 	@Test
@@ -89,70 +104,55 @@ public class MemberTest {
 		Member member = createPopulatedMember();
 		String invalidUuid = "0237eee0-bNOTV-ALID-0800200c9a666";
 		member.setUuid(invalidUuid);
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, invalidUuid, "UUID", Issue.NOT_VALID);
-	}
-	
-	@Test
-	public void nullFirstNameIsReportedByValidationReport()
-	{
-		Member member = createPopulatedMember();
-		member.setFirstName(null);
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, UUID, "First Name", Issue.NOT_POPULATED);
-	}
-	
-	@Test
-	public void firstNameWithSpaceIsReportedByValidationReport()
-	{
-		Member member = createPopulatedMember();
-		member.setFirstName("Alfr ed");
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, UUID, "First Name", Issue.NOT_VALID);
-	}
-	
-	@Test
-	public void singleCharFristNameIsReportedByValidationReport()
-	{
-		Member member = createPopulatedMember();
-		member.setFirstName("A");
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, UUID, "First Name", Issue.NOT_VALID);
-	}
-	
-	@Test
-	public void digitInFristNameIsReportedByValidationReport()
-	{
-		Member member = createPopulatedMember();
-		member.setFirstName("Alfr3d");
-		List<ValidationReport> reports = member.validate();
-		checkReport(reports, UUID, "First Name", Issue.NOT_VALID);
-	}
-	
-	@Test
-	public void firstNameCanContainDotDashAndApostrophe(){
-		Member member = createPopulatedMember();
-		member.setFirstName("Alfr'ed");
-		assertTrue(member.validate().isEmpty());
-		member.setFirstName("Alfr-ed");
-		assertTrue(member.validate().isEmpty());
-		member.setFirstName("Alfr.ed");
-		assertTrue(member.validate().isEmpty());
+		checkReport(member, invalidUuid, "UUID");
 	}
 
-	private void checkReport(List<ValidationReport> reports,
-			String expectedUuid, String expectedField, Issue expectedIssue) {
+	@Test
+	public void nullFirstNameIsReportedByValidationReport() {
+		Member member = createPopulatedMember();
+		member.setFirstName(null);	
+		checkReport(member, UUID, "First Name");
+	}
+
+	@Test
+	public void firstNameWithSpaceIsReportedByValidationReport() {
+		Member member = createPopulatedMember();
+		member.setFirstName("Alfr ed");
+		checkReport(member, UUID, "First Name");
+	}
+
+	@Test
+	public void singleCharFristNameIsReportedByValidationReport() {
+		Member member = createPopulatedMember();
+		member.setFirstName("A");
+		checkReport(member, UUID, "First Name");
+	}
+
+	@Test
+	public void digitInFristNameIsReportedByValidationReport() {
+		Member member = createPopulatedMember();
+		member.setFirstName("Alfr3d");
+		checkReport(member, UUID, "First Name");
+	}
+
+	@Test
+	public void firstNameCanContainDotDashAndApostrophe() {
+		Member member = createPopulatedMember();
+		member.setFirstName("Alfr'ed");
+		checkNoReports(member);
+		member.setFirstName("Alfr-ed");
+		checkNoReports(member);
+		member.setFirstName("Alfr.ed");
+		checkNoReports(member);
+	}
+
+	private void checkReport(Member member,
+			String expectedUuid, String expectedField) {
+		Set<ConstraintViolation<Member>> reports = validator.validate(member);
 		assertNotNull(reports);
 		assertThat(reports.size(), is(1));
-		ValidationReport report = reports.get(0);
-		assertThat(report.getTargetType(), is(ValidationReport.Target.MEMBER));
-		if (expectedUuid == null) {
-			assertNull(report.getTargetUuid());
-		} else {
-			assertThat(report.getTargetUuid(), is(expectedUuid));
-		}
-		assertThat(report.getFieldName(), is(expectedField));
-		assertThat(report.getIssueType(), is(expectedIssue));
+		ConstraintViolation<Member> report = reports.iterator().next();
+		System.out.println(report);
 	}
 
 	@Test
@@ -198,7 +198,6 @@ public class MemberTest {
 		assertThat(member.getFirstName(), is(FIRST_NAME));
 	}
 
-	
 	@Ignore
 	@Test
 	public void canAccessesMemberViaJpa() throws DatabaseUnitException,
@@ -278,8 +277,8 @@ public class MemberTest {
 	 */
 	private void ensureConnected() throws DatabaseUnitException, SQLException {
 		if (connection == null) {
-			connection = new DatabaseConnection(
-					DriverManager.getConnection("jdbc:hsqldb:mem:test"));
+			connection = new DatabaseConnection(DriverManager
+					.getConnection("jdbc:hsqldb:mem:test"));
 		}
 	}
 

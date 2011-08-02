@@ -1,18 +1,11 @@
 package org.rimasu.cloister.common.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.regex.Pattern;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.rimasu.cloister.common.model.ValidationReport.Issue;
-import org.rimasu.cloister.common.model.ValidationReport.Target;
 
 /**
  * Member is responsible for storing the all details stored for a member, apart
@@ -26,11 +19,7 @@ import org.rimasu.cloister.common.model.ValidationReport.Target;
 @Entity
 public class Member {
 
-	/**
-	 * Pattern used to validate firstName field.
-	 */
-	private static final Pattern FIRST_NAME_PATTERN = Pattern
-			.compile("[A-Za-z\\.\\-\\']{2,}?");
+
 
 	private String uuid;
 
@@ -41,6 +30,7 @@ public class Member {
 	}
 
 	@Id
+	@Pattern(regexp="[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}")
 	public String getUuid() {
 		return uuid;
 	}
@@ -55,34 +45,5 @@ public class Member {
 		return firstName;
 	}
 
-	/**
-	 * Create a validation report detailing issues with member configuration.
-	 * 
-	 * @return validation report.
-	 */
-	public List<ValidationReport> validate() {
-		List<ValidationReport> reports = new ArrayList<ValidationReport>();
 
-		if (uuid == null) {
-			reports.add(new ValidationReport(Target.MEMBER, uuid, "UUID",
-					Issue.NOT_POPULATED));
-		} else {
-			try {
-				UUID.fromString(uuid);
-			} catch (IllegalArgumentException e) {
-				reports.add(new ValidationReport(Target.MEMBER, uuid, "UUID",
-						Issue.NOT_VALID));
-			}
-		}
-
-		if (firstName == null) {
-			reports.add(new ValidationReport(Target.MEMBER, uuid, "First Name",
-					Issue.NOT_POPULATED));
-		} else if (!FIRST_NAME_PATTERN.matcher(firstName).matches()) {
-			reports.add(new ValidationReport(Target.MEMBER, uuid, "First Name",
-					Issue.NOT_VALID));
-		}
-
-		return reports;
-	}
 }
