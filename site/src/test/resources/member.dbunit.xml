@@ -1,7 +1,10 @@
 <dataset>
-     <member 
-     	uuid="0237eee0-bc3a-11e0-962b-0800200c9a66"
-     	firstname="Alfred2"
-         />
-     
- </dataset>
+	<table name="member">
+		<column>uuid</column>
+		<column>firstname</column>
+		<row>
+			<value>0237eee0-bc3a-11e0-962b-0800200c9a666</value>
+			<value>Al'fr-e.d</value>
+		</row>
+	</table>
+</dataset>
