@@ -56,6 +56,7 @@ public class MemberTest {
 	// properties values used in getter/setter testing.
 	private static final String FIRST_NAME = "Al'fr-e.d";
 	private static final String UUID = "51d04e30-bdd3-11e0-962b-0800200c9a66";
+	private static final String UUID2 = "51d04e30-bdd3-11e9-962b-0800200c9a66";
 
 	private DatabaseConnection connection;
 
@@ -206,20 +207,21 @@ public class MemberTest {
 		Member member = (Member) found;
 		assertThat(member.getFirstName(), is(FIRST_NAME));
 	}
-
-	@Ignore
+	
 	@Test
 	public void canAccessesMemberViaJpa() throws DatabaseUnitException,
 			SQLException, IOException {
+		
 		EntityManager em = createEntityManager();
 		em.getTransaction().begin();
 		Member member = createPopulatedMember();
+		member.setUuid(UUID2);
 		em.persist(member);
 		em.flush();
 		em.getTransaction().commit();
 
 		ITable actual = getCurrentDataset().getTable("member");
-		ITable expected = loadDataset("member").getTable("member");
+		ITable expected = loadDataset("member-post-write").getTable("member");
 		new DbUnitAssert().assertEquals(expected, actual);
 	}
 

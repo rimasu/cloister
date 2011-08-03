@@ -1,0 +1,14 @@
+<dataset>
+	<table name="member">
+		<column>uuid</column>
+		<column>firstname</column>
+		<row>
+			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>
+			<value>Al'fr-e.d</value>
+		</row>
+		<row>
+			<value>51d04e30-bdd3-11e9-962b-0800200c9a66</value>
+			<value>Al'fr-e.d</value>
+		</row>
+	</table>
+</dataset>
