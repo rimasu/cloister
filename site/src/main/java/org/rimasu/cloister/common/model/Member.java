@@ -19,8 +19,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 public class Member {
 
-
-
 	private String uuid;
 
 	private String firstName;
@@ -30,7 +28,9 @@ public class Member {
 	}
 
 	@Id
-	@Pattern(regexp="[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}")
+	@NotNull(message="{member.uuid.null}")
+	@Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", 
+			message = "{member.uuid.valid}")			
 	public String getUuid() {
 		return uuid;
 	}
@@ -39,11 +39,10 @@ public class Member {
 		this.firstName = name;
 	}
 
-	@NotNull
-	@Size(min=2)
+	@NotNull(message = "{member.firstName.null}")
+	@Size(min = 2, message = "{member.firstName.length}")
+	@Pattern(regexp = "[A-Za-z\\.\\-\\']*", message = "{member.firstName.legalChars}")
 	public String getFirstName() {
 		return firstName;
 	}
-
-
 }

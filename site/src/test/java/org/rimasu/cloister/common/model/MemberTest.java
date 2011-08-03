@@ -55,7 +55,7 @@ public class MemberTest {
 
 	// properties values used in getter/setter testing.
 	private static final String FIRST_NAME = "Al'fr-e.d";
-	private static final String UUID = "0237eee0-bc3a-11e0-962b-0800200c9a666";
+	private static final String UUID = "51d04e30-bdd3-11e0-962b-0800200c9a66";
 
 	private DatabaseConnection connection;
 
@@ -88,15 +88,15 @@ public class MemberTest {
 	}
 
 	private void checkNoReports(Member member) {
-		assertTrue(validator.validate(member).isEmpty());
+		Set<ConstraintViolation<Member>> reports = validator.validate(member);
+		assertTrue(reports.isEmpty());
 	}
 
 	@Test
 	public void nullUuidIsIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setUuid(null);
-	
-		checkReport(member, null, "UUID");
+		checkReport(member, "uuid");
 	}
 
 	@Test
@@ -104,35 +104,42 @@ public class MemberTest {
 		Member member = createPopulatedMember();
 		String invalidUuid = "0237eee0-bNOTV-ALID-0800200c9a666";
 		member.setUuid(invalidUuid);
-		checkReport(member, invalidUuid, "UUID");
+		checkReport(member, "uuid");
 	}
 
 	@Test
 	public void nullFirstNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
-		member.setFirstName(null);	
-		checkReport(member, UUID, "First Name");
+		member.setFirstName(null);
+		checkReport(member, "firstName");
 	}
 
 	@Test
 	public void firstNameWithSpaceIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr ed");
-		checkReport(member, UUID, "First Name");
+		checkReport(member, "firstName");
 	}
 
 	@Test
 	public void singleCharFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("A");
-		checkReport(member, UUID, "First Name");
+		checkReport(member, "firstName");
 	}
 
 	@Test
 	public void digitInFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr3d");
-		checkReport(member, UUID, "First Name");
+		checkReport(member, "firstName");
+	}
+	
+	@Test
+	public void semicolonInFristNameIsReportedByValidationReport() {
+		Member member = createPopulatedMember();
+		member.setFirstName("Alfr;d");
+		checkReport(member, "firstName");
 	}
 
 	@Test
@@ -146,13 +153,14 @@ public class MemberTest {
 		checkNoReports(member);
 	}
 
-	private void checkReport(Member member,
-			String expectedUuid, String expectedField) {
+	private void checkReport(Member member, String expectedField) {
 		Set<ConstraintViolation<Member>> reports = validator.validate(member);
 		assertNotNull(reports);
 		assertThat(reports.size(), is(1));
 		ConstraintViolation<Member> report = reports.iterator().next();
-		System.out.println(report);
+		assertThat(report.getPropertyPath().toString(), is(expectedField));
+		assertThat(report.getRootBean(), is(member));
+		System.out.println(report.getMessage());
 	}
 
 	@Test
@@ -180,6 +188,7 @@ public class MemberTest {
 		String content = dest.toString();
 		assertTrue(content.contains(UUID));
 		assertTrue(content.contains(FIRST_NAME));
+		
 	}
 
 	@Test
@@ -277,8 +286,8 @@ public class MemberTest {
 	 */
 	private void ensureConnected() throws DatabaseUnitException, SQLException {
 		if (connection == null) {
-			connection = new DatabaseConnection(DriverManager
-					.getConnection("jdbc:hsqldb:mem:test"));
+			connection = new DatabaseConnection(
+					DriverManager.getConnection("jdbc:hsqldb:mem:test"));
 		}
 	}
 
