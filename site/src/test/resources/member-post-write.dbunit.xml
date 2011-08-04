@@ -11,4 +11,16 @@
 			<value>Al'fr-e.d</value>
 		</row>
 	</table>
+	<table name="member_interests">
+		<column>member_id</column>
+		<column>content</column>
+		<row>
+			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>
+			<value>Interest content</value>
+		</row>
+		<row>
+			<value>51d04e30-bdd3-11e9-962b-0800200c9a66</value>
+			<value>Interest content</value>
+		</row>
+	</table>
 </dataset>

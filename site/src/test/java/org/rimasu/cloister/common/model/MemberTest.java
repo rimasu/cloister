@@ -58,6 +58,10 @@ public class MemberTest {
 	private static final String UUID = "51d04e30-bdd3-11e0-962b-0800200c9a66";
 	private static final String UUID2 = "51d04e30-bdd3-11e9-962b-0800200c9a66";
 
+	private static final String INTEREST1 = "Example interest text1";
+	
+	private static final String INTEREST2 = "Example interest text2";
+
 	private DatabaseConnection connection;
 
 	private Validator validator;
@@ -135,7 +139,7 @@ public class MemberTest {
 		member.setFirstName("Alfr3d");
 		checkReport(member, "firstName");
 	}
-	
+
 	@Test
 	public void semicolonInFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
@@ -152,6 +156,15 @@ public class MemberTest {
 		checkNoReports(member);
 		member.setFirstName("Alfr.ed");
 		checkNoReports(member);
+	}
+
+	@Test
+	public void canChangeMembersInterests() {
+		Member member = createPopulatedMember();
+		assertNotNull(member.getInterests());
+		assertThat(member.getInterests().size(), is(1));
+		member.getInterests().add(new Interest(INTEREST1));
+		assertThat(member.getInterests().size(), is(2));
 	}
 
 	private void checkReport(Member member, String expectedField) {
@@ -175,6 +188,9 @@ public class MemberTest {
 		Member member = (Member) result;
 		assertThat(member.getFirstName(), is(FIRST_NAME));
 		assertThat(member.getUuid(), is(UUID));
+		assertThat(member.getInterests().size(),is(2));
+		assertThat(member.getInterests().get(0).getContent(), is(INTEREST1));
+		assertThat(member.getInterests().get(1).getContent(), is(INTEREST2));
 	}
 
 	@Test
@@ -183,13 +199,16 @@ public class MemberTest {
 				.getName());
 		Marshaller marshaller = context.createMarshaller();
 		Member member = createPopulatedMember();
+		member.getInterests().add(new Interest(INTEREST2));
 		StringWriter dest = new StringWriter();
 		marshaller.marshal(member, dest);
 		dest.close();
 		String content = dest.toString();
 		assertTrue(content.contains(UUID));
 		assertTrue(content.contains(FIRST_NAME));
-		
+		assertTrue(content.contains(INTEREST1));
+		assertTrue(content.contains(INTEREST2));
+
 	}
 
 	@Test
@@ -206,12 +225,15 @@ public class MemberTest {
 		assertNotNull(found);
 		Member member = (Member) found;
 		assertThat(member.getFirstName(), is(FIRST_NAME));
+		assertThat(member.getInterests().size(),is(2));
+		assertThat(member.getInterests().get(0).getContent(), is(INTEREST1));
+		assertThat(member.getInterests().get(1).getContent(), is(INTEREST2));
 	}
-	
+
 	@Test
 	public void canAccessesMemberViaJpa() throws DatabaseUnitException,
 			SQLException, IOException {
-		
+
 		EntityManager em = createEntityManager();
 		em.getTransaction().begin();
 		Member member = createPopulatedMember();
@@ -229,6 +251,7 @@ public class MemberTest {
 		Member member = new Member();
 		member.setUuid(UUID);
 		member.setFirstName(FIRST_NAME);
+		member.getInterests().add(new Interest(INTEREST1));
 		return member;
 	}
 
