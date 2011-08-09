@@ -9,11 +9,15 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Id;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,8 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  * other members (and likely every other UUID). The UUID should never be exposed
  * via a user interface.
  */
-@XmlRootElement
-@XmlType(name="", propOrder={"uuid", "firstName", "interests"})
+@XmlType(name="", propOrder={"firstName", "interests"})
 @Entity
 public class Member {
 
@@ -41,8 +44,10 @@ public class Member {
 	}
 
 	@Id
-	@NotNull(message = "{member.uuid.null}")
-	@Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", message = "{member.uuid.valid}")
+	@XmlID
+	@XmlAttribute
+	@NotNull(message = "{uuid.null}")
+	@Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", message = "{uuid.valid}")
 	public String getUuid() {
 		return uuid;
 	}
@@ -59,13 +64,14 @@ public class Member {
 	}
 
 	
+	@XmlElementWrapper(name="interests")
+    @XmlElement(name="Interest")
     @ElementCollection
 	@CollectionTable(
 	        name="MEMBER_INTERESTS",
 	        joinColumns=@JoinColumn(name="MEMBER_ID")
-	)	
-	@XmlElementWrapper(name="interests")
-    @XmlElement(name="interest")
+	)		    
+	@OrderColumn(name="sortOrder")
 	public List<Interest> getInterests() {
 		if (interests == null) {
 			interests = new ArrayList<Interest>();

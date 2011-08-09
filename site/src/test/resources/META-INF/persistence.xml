@@ -5,7 +5,8 @@
 	
    <persistence-unit name="TEST_UNIT" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>org.rimasu.cloister.common.model.Member</class>        
+        <class>org.rimasu.cloister.common.model.Member</class> 
+        <class>org.rimasu.cloister.common.model.Message</class>       
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
@@ -19,7 +20,6 @@
 
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-
         </properties>
     </persistence-unit>
 

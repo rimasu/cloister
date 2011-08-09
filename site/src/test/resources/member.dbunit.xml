@@ -1,5 +1,5 @@
 <dataset>
-	<table name="member">
+	<table name="MEMBER">
 		<column>uuid</column>
 		<column>firstname</column>
 		<row>
@@ -7,16 +7,19 @@
 			<value>Al'fr-e.d</value>
 		</row>
 	</table>
-	<table name="member_interests">
-		<column>member_id</column>
-		<column>content</column>
+	<table name="MEMBER_INTERESTS">
+		<column>member_id</column>	
+		<column>sort_order</column>	
+		<column>content</column>		
 		<row>
-			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>
-			<value>Interest content</value>
+			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>	
+			<value>2</value>		
+			<value>Example interest text1</value>
 		</row>
 		<row>
-			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>
-			<value>Interest content</value>
+			<value>51d04e30-bdd3-11e0-962b-0800200c9a66</value>	
+			<value>1</value>		
+			<value>Example interest text2</value>
 		</row>
 	</table>
 </dataset>

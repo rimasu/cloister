@@ -177,39 +177,8 @@ public class MemberTest {
 		System.out.println(report.getMessage());
 	}
 
-	@Test
-	public void canConvertXmlToMember() throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(getClass().getPackage()
-				.getName());
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Object result = unmarshaller.unmarshal(getClass().getClassLoader()
-				.getResource("member.xml"));
-		assertTrue(result instanceof Member);
-		Member member = (Member) result;
-		assertThat(member.getFirstName(), is(FIRST_NAME));
-		assertThat(member.getUuid(), is(UUID));
-		assertThat(member.getInterests().size(),is(2));
-		assertThat(member.getInterests().get(0).getContent(), is(INTEREST1));
-		assertThat(member.getInterests().get(1).getContent(), is(INTEREST2));
-	}
 
-	@Test
-	public void canConvertMemberToXml() throws JAXBException, IOException {
-		JAXBContext context = JAXBContext.newInstance(getClass().getPackage()
-				.getName());
-		Marshaller marshaller = context.createMarshaller();
-		Member member = createPopulatedMember();
-		member.getInterests().add(new Interest(INTEREST2));
-		StringWriter dest = new StringWriter();
-		marshaller.marshal(member, dest);
-		dest.close();
-		String content = dest.toString();
-		assertTrue(content.contains(UUID));
-		assertTrue(content.contains(FIRST_NAME));
-		assertTrue(content.contains(INTEREST1));
-		assertTrue(content.contains(INTEREST2));
 
-	}
 
 	@Test
 	public void canLoadMemberViaJpa() throws SQLException,
@@ -226,8 +195,9 @@ public class MemberTest {
 		Member member = (Member) found;
 		assertThat(member.getFirstName(), is(FIRST_NAME));
 		assertThat(member.getInterests().size(),is(2));
-		assertThat(member.getInterests().get(0).getContent(), is(INTEREST1));
-		assertThat(member.getInterests().get(1).getContent(), is(INTEREST2));
+		
+		assertThat(member.getInterests().get(0).getContent(), is(INTEREST2));
+		assertThat(member.getInterests().get(1).getContent(), is(INTEREST1));
 	}
 
 	@Test

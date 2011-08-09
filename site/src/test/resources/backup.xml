@@ -1,0 +1,51 @@
+<BackUp>
+	<members>
+		<Member uuid="51d04e30-bdd3-11e0-962b-0800200c9a66">
+			<firstName>Al'fr-e.d</firstName>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>
+		<Member uuid="90cdf640-c289-11e0-962b-0800200c9a66">
+			<firstName>Catherine</firstName>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>
+		<Member uuid="97347360-c289-11e0-962b-0800200c9a66">
+			<firstName>Richard</firstName>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>		
+	</members>
+	<messages>
+		<Message uuid="0161c3c0-c288-11e0-962b-0800200c9a66">
+			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>
+			<sender>51d04e30-bdd3-11e0-962b-0800200c9a66</sender>			
+			<recipients>
+				<recipient>90cdf640-c289-11e0-962b-0800200c9a66</recipient>
+				<recipient>97347360-c289-11e0-962b-0800200c9a66</recipient>
+			</recipients>
+			<title>Title content</title>
+			<content>Content content</content>
+			<status>READ</status>
+			<sendDate>2002-09-24</sendDate>
+		</Message>
+	</messages>
+</BackUp>
