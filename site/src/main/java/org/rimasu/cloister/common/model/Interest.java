@@ -11,8 +11,6 @@ import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
 @Embeddable
 public class Interest {
 	
-	private int sortOrder;	
-
 	private String content;
 	
 	public Interest() {
@@ -35,14 +33,5 @@ public class Interest {
 		} else {
 			this.content = SimpleHtmlSanitizer.sanitizeHtml(content).asString();
 		}
-	}
-	
-	@Column(name="SORT_ORDER")	
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(int sortOrder) {
-		this.sortOrder = sortOrder;
-	}
+	}	
 }

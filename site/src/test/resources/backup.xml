@@ -32,12 +32,38 @@
 					<content>Example interest text2</content>
 				</Interest>
 			</interests>
-		</Member>		
+		</Member>
 	</members>
+	<messageBoxes>
+		<MessageBox uuid="3fb8c780-c34c-11e0-962b-0800200c9a66">
+			<owner>51d04e30-bdd3-11e0-962b-0800200c9a66</owner>		
+			<name>Inbox</name>	
+		</MessageBox>
+		<MessageBox uuid="48fb6280-c34c-11e0-962b-0800200c9a66">
+			<owner>51d04e30-bdd3-11e0-962b-0800200c9a66</owner>	
+			<name>Sent Items</name>		
+		</MessageBox>
+		<MessageBox uuid="51a1e490-c34c-11e0-962b-0800200c9a66">
+			<owner>90cdf640-c289-11e0-962b-0800200c9a66</owner>
+			<name>Inbox</name>
+		</MessageBox>
+		<MessageBox uuid="57547b00-c34c-11e0-962b-0800200c9a66">
+			<owner>90cdf640-c289-11e0-962b-0800200c9a66</owner>
+			<name>Sent Items</name>
+		</MessageBox>
+		<MessageBox uuid="65e1c2e0-c34c-11e0-962b-0800200c9a66">
+			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>	
+			<name>Inbox</name>		
+		</MessageBox>
+		<MessageBox uuid="74e4aff0-c34c-11e0-962b-0800200c9a66">
+			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>
+			<name>Sent Items</name>
+		</MessageBox>			
+	</messageBoxes>
 	<messages>
 		<Message uuid="0161c3c0-c288-11e0-962b-0800200c9a66">
-			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>
-			<sender>51d04e30-bdd3-11e0-962b-0800200c9a66</sender>			
+			<location>51a1e490-c34c-11e0-962b-0800200c9a66</location>
+			<sender>51d04e30-bdd3-11e0-962b-0800200c9a66</sender>
 			<recipients>
 				<recipient>90cdf640-c289-11e0-962b-0800200c9a66</recipient>
 				<recipient>97347360-c289-11e0-962b-0800200c9a66</recipient>

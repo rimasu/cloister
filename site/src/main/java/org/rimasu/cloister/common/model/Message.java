@@ -1,11 +1,13 @@
 package org.rimasu.cloister.common.model;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -18,8 +20,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 
 
 @Entity
-public class Message {
-	
+public class Message  {
 	@XmlEnum
 	public enum Status
 	{
@@ -28,9 +29,7 @@ public class Message {
 		DELETED
 	}
 	
-	private String uuid;
-	
-	private Member owner;
+	private MessageBox location;
 	
 	private Member sender;
 	
@@ -41,7 +40,9 @@ public class Message {
 	private String title;
 	
 	private Status status;
-		
+	
+	private String uuid;
+
 	@Id
 	@XmlID
 	@XmlAttribute
@@ -54,14 +55,15 @@ public class Message {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
+
 	@XmlIDREF
-	public Member getOwner(){
-		return owner;
+	@ManyToOne
+	public MessageBox getLocation() {
+		return location;
 	}
-	
-	public void setOwner(Member owner){
-		this.owner = owner;
+
+	public void setLocation(MessageBox location) {
+		this.location = location;
 	}
 	
 	@XmlIDREF
@@ -84,6 +86,7 @@ public class Message {
 		this.recipients = recipients;
 	}
 
+	@Temporal(value = TemporalType.TIMESTAMP)
 	@XmlSchemaType(name="date")
 	public Calendar getSendDate() {
 		return sendDate;
@@ -118,7 +121,5 @@ public class Message {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
 
 }

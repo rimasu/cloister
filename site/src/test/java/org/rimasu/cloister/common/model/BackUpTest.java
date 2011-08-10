@@ -48,8 +48,7 @@ public class BackUpTest {
 		assertThat(message0.getUuid(),is("0161c3c0-c288-11e0-962b-0800200c9a66"));
 		assertThat(message0.getTitle(), is("Title content"));
 		assertThat(message0.getContent(), is ("Content content"));
-		assertThat(message0.getSender(), is(member0));
-		assertThat(message0.getOwner(),is(member2));
+		assertThat(message0.getSender(), is(member0));		
 		assertThat(message0.getRecipients().size(), is(2));
 		assertThat(message0.getRecipients().get(0),is(member1));
 		assertThat(message0.getRecipients().get(1),is(member2));	

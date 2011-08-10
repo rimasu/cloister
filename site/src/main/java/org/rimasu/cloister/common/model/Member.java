@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Id;
-import javax.persistence.OrderBy;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -31,17 +31,19 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name="", propOrder={"firstName", "interests"})
 @Entity
-public class Member {
-
-	private String uuid;
+public class Member  {
 
 	private String firstName;
 
 	private List<Interest> interests;
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
+	
+	private MessageBox inbox;
+	
+	private MessageBox sentItems;
+	
+	private List<MessageBox> messageBoxes;
+	
+	private String uuid;
 
 	@Id
 	@XmlID
@@ -52,6 +54,10 @@ public class Member {
 		return uuid;
 	}
 
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
 	public void setFirstName(String name) {
 		this.firstName = name;
 	}
@@ -71,7 +77,7 @@ public class Member {
 	        name="MEMBER_INTERESTS",
 	        joinColumns=@JoinColumn(name="MEMBER_ID")
 	)		    
-	@OrderColumn(name="sortOrder")
+	@OrderColumn(name="SORT_ORDER")
 	public List<Interest> getInterests() {
 		if (interests == null) {
 			interests = new ArrayList<Interest>();
@@ -81,5 +87,38 @@ public class Member {
 
 	public void setInterests(List<Interest> interests) {
 		this.interests = interests;
+	}
+
+	@XmlIDREF
+	@XmlElementWrapper(name="messageBoxes")
+    @XmlElement(name="messageBox")      
+	@OrderColumn(name="SORT_ORDER")
+	@OneToMany
+	public List<MessageBox> getMessageBoxes() {
+		return messageBoxes;
+	}
+
+	public void setMessageBoxes(List<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
+	}
+
+	@XmlIDREF
+	@OneToOne
+	public MessageBox getInbox() {
+		return inbox;
+	}
+
+	public void setInbox(MessageBox inbox) {
+		this.inbox = inbox;
+	}
+
+	@XmlIDREF
+	@OneToOne
+	public MessageBox getSentItems() {
+		return sentItems;
+	}
+
+	public void setSentItems(MessageBox sentItems) {
+		this.sentItems = sentItems;
 	}
 }
