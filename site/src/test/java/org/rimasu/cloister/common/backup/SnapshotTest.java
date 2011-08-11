@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.common.backup;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -10,15 +10,20 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.junit.Test;
+import org.rimasu.cloister.common.model.EntityTest;
+import org.rimasu.cloister.common.model.Fixture;
+import org.rimasu.cloister.common.model.Member;
+import org.rimasu.cloister.common.model.Message;
 
 /**
  * Test Unit For Backup
  * @author richards
  *
  */
-public class BackUpTest {
+public class SnapshotTest extends EntityTest {
 	
-	
+		
+
 	@Test
 	public void canImportXml() throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(getClass().getPackage()
@@ -26,24 +31,29 @@ public class BackUpTest {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		Object result = unmarshaller.unmarshal(getClass().getClassLoader()
 				.getResource("backup.xml"));
-		assertTrue(result instanceof BackUp);
-		BackUp backUp = (BackUp) result;
+		assertTrue(result instanceof Snapshot);
+		Snapshot backUp = (Snapshot) result;
 		
-		
+		assertNotNull(backUp);
+		assertThat(backUp.getMessages().size(), is(1));
+		assertThat(backUp.getMessageBoxes().size(), is(6));			
 		assertThat(backUp.getMembers().size(), is(3));
 		
 		Member member0 = backUp.getMembers().get(0);
-		assertThat(member0.getFirstName(), is("Al'fr-e.d"));
+		assertThat(member0.getFirstName(), is("Al'fr-e.d"));		
+		assertThat(member0.getInbox(), is(backUp.getMessageBoxes().get(0)));
+		assertThat(member0.getSentItems(), is(backUp.getMessageBoxes().get(1)));
 		
 		Member member1 = backUp.getMembers().get(1);
 		assertThat(member1.getFirstName(), is("Catherine"));
+		assertThat(member1.getInbox(), is(backUp.getMessageBoxes().get(2)));
+		assertThat(member1.getSentItems(), is(backUp.getMessageBoxes().get(3)));
 		
 		Member member2 = backUp.getMembers().get(2);
 		assertThat(member2.getFirstName(), is("Richard"));
-				
-		assertNotNull(backUp);
-		assertThat(backUp.getMessages().size(), is(1));
-		
+		assertThat(member2.getInbox(), is(backUp.getMessageBoxes().get(4)));
+		assertThat(member2.getSentItems(), is(backUp.getMessageBoxes().get(5)));
+						
 		Message message0 = backUp.getMessages().get(0);		
 		assertThat(message0.getUuid(),is("0161c3c0-c288-11e0-962b-0800200c9a66"));
 		assertThat(message0.getTitle(), is("Title content"));
@@ -54,6 +64,22 @@ public class BackUpTest {
 		assertThat(message0.getRecipients().get(1),is(member2));	
 		assertThat(message0.getStatus(), is(Message.Status.READ));
 		//assertThat(message0.getSendDate());
+	}
+	
+	@Test
+	public void canValidateBackUp()
+	{
+		Snapshot backUp = new Snapshot();
+		Member member = Fixture.createMember();
+		backUp.getMessageBoxes().addAll(member.getMessageBoxes());
+		backUp.getMembers().add(member);
+		
+		assertValid(backUp);
+		// make member first name invalid.
+		member.setFirstName("");
+		
+		assertInvalid(member,"firstName");
+		assertInvalid(backUp,"members[0].firstName");
 	}
 
 

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -14,10 +13,8 @@ import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlType;
 
@@ -29,35 +26,33 @@ import javax.xml.bind.annotation.XmlType;
  * other members (and likely every other UUID). The UUID should never be exposed
  * via a user interface.
  */
-@XmlType(name="", propOrder={"firstName", "interests"})
+@XmlType(name = "", propOrder = { "firstName", "inbox", "sentItems",
+		"messageBoxes", "interests" })
 @Entity
-public class Member  {
+public class Member extends AbstractEntity {
 
 	private String firstName;
 
 	private List<Interest> interests;
-	
+
 	private MessageBox inbox;
-	
+
 	private MessageBox sentItems;
-	
+
 	private List<MessageBox> messageBoxes;
-	
-	private String uuid;
 
-	@Id
-	@XmlID
-	@XmlAttribute
-	@NotNull(message = "{uuid.null}")
-	@Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", message = "{uuid.valid}")
-	public String getUuid() {
-		return uuid;
+	public Member(String uuid) {
+		super(uuid);
+		this.messageBoxes = new ArrayList<MessageBox>();
+		this.interests = new ArrayList<Interest>();
+		
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public Member() {
+		this(null);
 	}
-	
+
+
 	public void setFirstName(String name) {
 		this.firstName = name;
 	}
@@ -69,19 +64,12 @@ public class Member  {
 		return firstName;
 	}
 
-	
-	@XmlElementWrapper(name="interests")
-    @XmlElement(name="Interest")
-    @ElementCollection
-	@CollectionTable(
-	        name="MEMBER_INTERESTS",
-	        joinColumns=@JoinColumn(name="MEMBER_ID")
-	)		    
-	@OrderColumn(name="SORT_ORDER")
-	public List<Interest> getInterests() {
-		if (interests == null) {
-			interests = new ArrayList<Interest>();
-		}
+	@XmlElementWrapper(name = "interests")
+	@XmlElement(name = "Interest")
+	@ElementCollection
+	@CollectionTable(name = "MEMBER_INTERESTS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+	@OrderColumn(name = "SORT_ORDER")
+	public List<Interest> getInterests() {	
 		return interests;
 	}
 
@@ -90,9 +78,9 @@ public class Member  {
 	}
 
 	@XmlIDREF
-	@XmlElementWrapper(name="messageBoxes")
-    @XmlElement(name="messageBox")      
-	@OrderColumn(name="SORT_ORDER")
+	@XmlElementWrapper(name = "messageBoxes")
+	@XmlElement(name = "messageBox")
+	@OrderColumn(name = "SORT_ORDER")
 	@OneToMany
 	public List<MessageBox> getMessageBoxes() {
 		return messageBoxes;

@@ -1,31 +1,17 @@
 package org.rimasu.cloister.common.model;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.assertion.DbUnitAssert;
@@ -33,14 +19,9 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.dbunit.util.fileloader.FlatXmlDataFileLoader;
 import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -49,7 +30,7 @@ import org.junit.Test;
  * @author richards
  * 
  */
-public class MemberTest {
+public class MemberTest extends EntityTest {
 
 	private static final String TEST_PERSISTENCE_UNIT = "TEST_UNIT";
 
@@ -64,14 +45,7 @@ public class MemberTest {
 
 	private DatabaseConnection connection;
 
-	private Validator validator;
 
-	@Before
-	public void beforeEachTest() {
-		ValidatorFactory factory = Validation.byDefaultProvider().configure()
-				.buildValidatorFactory();
-		validator = factory.getValidator();
-	}
 
 	@Test
 	public void canChangeMembersFirstName() {
@@ -80,82 +54,59 @@ public class MemberTest {
 		assertThat(member.getFirstName(), is(FIRST_NAME));
 	}
 
-	@Test
-	public void canChangeAMembersUuid() {
-		Member member = new Member();
-		member.setUuid(UUID);
-		assertThat(member.getUuid(), is(UUID));
-	}
+
 
 	@Test
 	public void canCreateAValidationReportFromAMember() {
-		checkNoReports(createPopulatedMember());
+		assertValid(createPopulatedMember());
 	}
 
-	private void checkNoReports(Member member) {
-		Set<ConstraintViolation<Member>> reports = validator.validate(member);
-		assertTrue(reports.isEmpty());
-	}
 
-	@Test
-	public void nullUuidIsIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
-		member.setUuid(null);
-		checkReport(member, "uuid");
-	}
-
-	@Test
-	public void notValidUuidIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
-		String invalidUuid = "0237eee0-bNOTV-ALID-0800200c9a666";
-		member.setUuid(invalidUuid);
-		checkReport(member, "uuid");
-	}
 
 	@Test
 	public void nullFirstNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName(null);
-		checkReport(member, "firstName");
+		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void firstNameWithSpaceIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr ed");
-		checkReport(member, "firstName");
+		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void singleCharFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("A");
-		checkReport(member, "firstName");
+		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void digitInFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr3d");
-		checkReport(member, "firstName");
+		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void semicolonInFristNameIsReportedByValidationReport() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr;d");
-		checkReport(member, "firstName");
+		assertInvalid(member, "firstName");		
 	}
 
 	@Test
 	public void firstNameCanContainDotDashAndApostrophe() {
 		Member member = createPopulatedMember();
 		member.setFirstName("Alfr'ed");
-		checkNoReports(member);
+		assertValid(member);
 		member.setFirstName("Alfr-ed");
-		checkNoReports(member);
+		assertValid(member);
 		member.setFirstName("Alfr.ed");
-		checkNoReports(member);
+		assertValid(member);
 	}
 
 	@Test
@@ -166,18 +117,6 @@ public class MemberTest {
 		member.getInterests().add(new Interest(INTEREST1));
 		assertThat(member.getInterests().size(), is(2));
 	}
-
-	private void checkReport(Member member, String expectedField) {
-		Set<ConstraintViolation<Member>> reports = validator.validate(member);
-		assertNotNull(reports);
-		assertThat(reports.size(), is(1));
-		ConstraintViolation<Member> report = reports.iterator().next();
-		assertThat(report.getPropertyPath().toString(), is(expectedField));
-		assertThat(report.getRootBean(), is(member));
-		System.out.println(report.getMessage());
-	}
-
-
 
 
 	@Test

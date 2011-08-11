@@ -1,39 +1,4 @@
 <BackUp>
-	<members>
-		<Member uuid="51d04e30-bdd3-11e0-962b-0800200c9a66">
-			<firstName>Al'fr-e.d</firstName>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-		<Member uuid="90cdf640-c289-11e0-962b-0800200c9a66">
-			<firstName>Catherine</firstName>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-		<Member uuid="97347360-c289-11e0-962b-0800200c9a66">
-			<firstName>Richard</firstName>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-	</members>
 	<messageBoxes>
 		<MessageBox uuid="3fb8c780-c34c-11e0-962b-0800200c9a66">
 			<owner>51d04e30-bdd3-11e0-962b-0800200c9a66</owner>		
@@ -56,10 +21,51 @@
 			<name>Inbox</name>		
 		</MessageBox>
 		<MessageBox uuid="74e4aff0-c34c-11e0-962b-0800200c9a66">
-			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>
+			<owner>861475c0-c415-11e0-962b-0800200c9a66</owner>
 			<name>Sent Items</name>
 		</MessageBox>			
 	</messageBoxes>
+	<members>
+		<Member uuid="51d04e30-bdd3-11e0-962b-0800200c9a66">
+			<firstName>Al'fr-e.d</firstName>
+			<inbox>51d04e30-bdd3-11e0-962b-0800200c9a66</inbox>
+			<sentItems>51d04e30-bdd3-11e0-962b-0800200c9a66</sentItems>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>
+		<Member uuid="90cdf640-c289-11e0-962b-0800200c9a66">
+			<firstName>Catherine</firstName>
+			<inbox>90cdf640-c289-11e0-962b-0800200c9a66</inbox>
+			<sentItems>90cdf640-c289-11e0-962b-0800200c9a66</sentItems>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>
+		<Member uuid="97347360-c289-11e0-962b-0800200c9a66">
+			<firstName>Richard</firstName>
+			<inbox>97347360-c289-11e0-962b-0800200c9a66</inbox>
+			<sentItems>861475c0-c415-11e0-962b-0800200c9a66</sentItems>
+			<interests>
+				<Interest>
+					<content>Example interest text1</content>
+				</Interest>
+				<Interest>
+					<content>Example interest text2</content>
+				</Interest>
+			</interests>
+		</Member>
+	</members>
 	<messages>
 		<Message uuid="0161c3c0-c288-11e0-962b-0800200c9a66">
 			<location>51a1e490-c34c-11e0-962b-0800200c9a66</location>
