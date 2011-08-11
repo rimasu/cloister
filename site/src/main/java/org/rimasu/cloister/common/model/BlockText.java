@@ -8,15 +8,15 @@ import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
 
 
 @Embeddable
-public class Interest {
+public class BlockText {
 	
 	private String content;
 	
-	public Interest() {
+	public BlockText() {
 		content = "";
 	}
 
-	public Interest(String content) {
+	public BlockText(String content) {
 		this.content = content;
 	}
 

@@ -21,8 +21,6 @@ import org.rimasu.cloister.common.model.Message;
  *
  */
 public class SnapshotTest extends EntityTest {
-	
-		
 
 	@Test
 	public void canImportXml() throws JAXBException {
@@ -38,6 +36,7 @@ public class SnapshotTest extends EntityTest {
 		assertThat(backUp.getMessages().size(), is(1));
 		assertThat(backUp.getMessageBoxes().size(), is(6));			
 		assertThat(backUp.getMembers().size(), is(3));
+		assertThat(backUp.getPrincipals().size(),is(4));
 		
 		Member member0 = backUp.getMembers().get(0);
 		assertThat(member0.getFirstName(), is("Al'fr-e.d"));		

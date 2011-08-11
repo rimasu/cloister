@@ -27,13 +27,17 @@ import javax.xml.bind.annotation.XmlType;
  * via a user interface.
  */
 @XmlType(name = "", propOrder = { "firstName", "inbox", "sentItems",
-		"messageBoxes", "interests" })
+		"messageBoxes", "interests","projects" })
 @Entity
 public class Member extends AbstractEntity {
 
 	private String firstName;
+	
+	private String surname;
 
-	private List<Interest> interests;
+	private List<BlockText> projects;
+	
+	private List<BlockText> interests;
 
 	private MessageBox inbox;
 
@@ -44,7 +48,8 @@ public class Member extends AbstractEntity {
 	public Member(String uuid) {
 		super(uuid);
 		this.messageBoxes = new ArrayList<MessageBox>();
-		this.interests = new ArrayList<Interest>();
+		this.interests = new ArrayList<BlockText>();
+		this.projects = new ArrayList<BlockText>();
 		
 	}
 
@@ -53,41 +58,26 @@ public class Member extends AbstractEntity {
 	}
 
 
-	public void setFirstName(String name) {
-		this.firstName = name;
-	}
-
 	@NotNull(message = "{member.firstName.null}")
 	@Size(min = 2, message = "{member.firstName.length}")
 	@Pattern(regexp = "[A-Za-z\\.\\-\\']*", message = "{member.firstName.legalChars}")
 	public String getFirstName() {
 		return firstName;
 	}
-
-	@XmlElementWrapper(name = "interests")
-	@XmlElement(name = "Interest")
-	@ElementCollection
-	@CollectionTable(name = "MEMBER_INTERESTS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
-	@OrderColumn(name = "SORT_ORDER")
-	public List<Interest> getInterests() {	
-		return interests;
+	
+	public void setFirstName(String name) {
+		this.firstName = name;
 	}
 
-	public void setInterests(List<Interest> interests) {
-		this.interests = interests;
+	@NotNull(message = "{member.surname.null}")
+	@Size(min = 2, message = "{member.surname.length}")
+	@Pattern(regexp = "[A-Za-z\\.\\-\\']*", message = "{member.surname.legalChars}")
+	public String getSurname() {
+		return surname;
 	}
 
-	@XmlIDREF
-	@XmlElementWrapper(name = "messageBoxes")
-	@XmlElement(name = "messageBox")
-	@OrderColumn(name = "SORT_ORDER")
-	@OneToMany
-	public List<MessageBox> getMessageBoxes() {
-		return messageBoxes;
-	}
-
-	public void setMessageBoxes(List<MessageBox> messageBoxes) {
-		this.messageBoxes = messageBoxes;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	@XmlIDREF
@@ -109,4 +99,50 @@ public class Member extends AbstractEntity {
 	public void setSentItems(MessageBox sentItems) {
 		this.sentItems = sentItems;
 	}
+	
+	@XmlIDREF
+	@XmlElementWrapper(name = "messageBoxes")
+	@XmlElement(name = "messageBox")
+	@OrderColumn(name = "SORT_ORDER")
+	@OneToMany
+	public List<MessageBox> getMessageBoxes() {
+		return messageBoxes;
+	}
+
+	public void setMessageBoxes(List<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
+	}
+
+
+	@XmlElementWrapper(name = "interests")
+	@XmlElement(name = "Interest")
+	@ElementCollection
+	@CollectionTable(name = "MEMBER_INTERESTS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+	@OrderColumn(name = "SORT_ORDER")
+	public List<BlockText> getInterests() {	
+		return interests;
+	}
+
+	public void setInterests(List<BlockText> interests) {
+		this.interests = interests;
+	}
+	
+	@XmlElementWrapper(name = "projects")
+	@XmlElement(name = "Project")
+	@ElementCollection
+	@CollectionTable(name = "MEMBER_PROJECTS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+	@OrderColumn(name = "SORT_ORDER")
+	public List<BlockText> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<BlockText> projects) {
+		this.projects = projects;
+	}
+
+
+
+
+
+
 }

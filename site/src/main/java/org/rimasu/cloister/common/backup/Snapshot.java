@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.rimasu.cloister.common.model.Member;
 import org.rimasu.cloister.common.model.Message;
 import org.rimasu.cloister.common.model.MessageBox;
+import org.rimasu.cloister.common.model.Principal;
 
 /**
  * Snapshot contains the entire state of the model. This is used as the root
@@ -31,6 +32,11 @@ public class Snapshot {
 	 * All the members.
 	 */
 	private List<Member> members;
+	
+	/**
+	 * All the principals.
+	 */
+	private List<Principal> principals;
 
 	/**
 	 * All the mesages.
@@ -79,6 +85,17 @@ public class Snapshot {
 
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
+	}
+
+	@Valid
+	@XmlElementWrapper(name = "principals")
+	@XmlElement(name = "Principal")
+	public List<Principal> getPrincipals() {
+		return principals;
+	}
+
+	public void setPrincipals(List<Principal> principals) {
+		this.principals = principals;
 	}
 
 }

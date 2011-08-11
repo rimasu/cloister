@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-public class InterestTest extends EntityTest {
+public class BlockTextTest extends EntityTest {
 	
 	private String UPDATED_CONTENT = "updated content.";
 	private String DIRTY_XML="<h1>Simon</h1><script></script>";
@@ -14,7 +14,7 @@ public class InterestTest extends EntityTest {
 		
 	@Test
 	public void canChangeContent(){
-		Interest interest = new Interest();		
+		BlockText interest = new BlockText();		
 		assertThat(interest.getContent(), is (""));		
 		interest.setContent(UPDATED_CONTENT);		
 		assertThat(interest.getContent(), is(UPDATED_CONTENT));
@@ -23,7 +23,7 @@ public class InterestTest extends EntityTest {
 	@Test
 	public void contentIsSantized()
 	{
-		Interest interest = new Interest();
+		BlockText interest = new BlockText();
 		interest.setContent(DIRTY_XML);		
 		assertThat(interest.getContent(),is(CLEAN_XML));
 	}
@@ -31,14 +31,14 @@ public class InterestTest extends EntityTest {
 	@Test
 	public void emptyInterestIsInvalid()
 	{
-		Interest interest = new Interest();		
+		BlockText interest = new BlockText();		
 		assertInvalid(interest, "content");		
 	}
 	
 	@Test
 	public void nullInterestIsInvalid()
 	{
-		Interest interest = new Interest();	
+		BlockText interest = new BlockText();	
 		interest.setContent(null);
 		assertInvalid(interest, "content");
 	}

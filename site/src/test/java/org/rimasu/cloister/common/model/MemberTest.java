@@ -114,7 +114,7 @@ public class MemberTest extends EntityTest {
 		Member member = createPopulatedMember();
 		assertNotNull(member.getInterests());
 		assertThat(member.getInterests().size(), is(1));
-		member.getInterests().add(new Interest(INTEREST1));
+		member.getInterests().add(new BlockText(INTEREST1));
 		assertThat(member.getInterests().size(), is(2));
 	}
 
@@ -160,7 +160,7 @@ public class MemberTest extends EntityTest {
 		Member member = new Member();
 		member.setUuid(UUID);
 		member.setFirstName(FIRST_NAME);
-		member.getInterests().add(new Interest(INTEREST1));
+		member.getInterests().add(new BlockText(INTEREST1));
 		return member;
 	}
 

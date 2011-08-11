@@ -34,4 +34,11 @@ public class Fixture {
 		return firstNames[nextFirstName++];
 	}
 
+	public static Principal createPrincipal() {
+		Principal principal = new Principal(getUuid());
+		principal.setUsername(principal.getUuid());
+		principal.generatePasswordHash(principal.getUuid());
+		return principal;
+	}
+
 }
