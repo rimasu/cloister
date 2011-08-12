@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.server.model.auth;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -14,11 +15,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
-import org.eclipse.persistence.annotations.Index;
 import org.mindrot.jbcrypt.BCrypt;
+import org.rimasu.cloister.server.model.core.Member;
 
 @Entity
-public class Principal extends AbstractEntity {
+public class Principal  {
 
 	private String username;
 
@@ -31,12 +32,8 @@ public class Principal extends AbstractEntity {
 	public Principal() {
 	}
 
-	public Principal(String uuid) {
-		super(uuid);
-	}
-
+	@Id
 	@NotNull
-	@Index
 	@Size(min = 4)
 	@Column(unique = true, nullable = false)
 	public String getUsername() {
@@ -95,5 +92,9 @@ public class Principal extends AbstractEntity {
 	 */
 	public boolean checkPassword(String clearTextCandidate) {
 		return BCrypt.checkpw(clearTextCandidate, passwordHash);
+	}
+	
+	public static Principal find(String username){
+		return null;
 	}
 }

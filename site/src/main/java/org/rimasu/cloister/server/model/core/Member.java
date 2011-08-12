@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.server.model.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlType;
+
+import org.rimasu.cloister.server.model.AbstractEntity;
 
 /**
  * Member is responsible for storing the all details stored for a member, apart

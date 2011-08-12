@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.backup;
+package org.rimasu.cloister.server.backup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.rimasu.cloister.common.model.Member;
-import org.rimasu.cloister.common.model.Message;
-import org.rimasu.cloister.common.model.MessageBox;
-import org.rimasu.cloister.common.model.Principal;
+import org.rimasu.cloister.server.model.auth.Principal;
+import org.rimasu.cloister.server.model.core.Member;
+import org.rimasu.cloister.server.model.core.Message;
+import org.rimasu.cloister.server.model.core.MessageBox;
 
 /**
  * Snapshot contains the entire state of the model. This is used as the root

@@ -1,6 +1,8 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.server.model.core;
 
 import javax.persistence.Entity;
+
+import org.rimasu.cloister.server.model.AbstractEntity;
 
 @Entity
 public class MessageBox extends AbstractEntity {

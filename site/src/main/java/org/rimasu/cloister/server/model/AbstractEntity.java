@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.server.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

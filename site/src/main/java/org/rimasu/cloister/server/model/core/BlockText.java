@@ -1,4 +1,4 @@
-package org.rimasu.cloister.common.model;
+package org.rimasu.cloister.server.model.core;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
