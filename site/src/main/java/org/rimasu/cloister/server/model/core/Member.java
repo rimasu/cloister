@@ -29,16 +29,16 @@ import org.rimasu.cloister.server.model.AbstractEntity;
  * via a user interface.
  */
 @XmlType(name = "", propOrder = { "firstName", "inbox", "sentItems",
-		"messageBoxes", "interests","projects" })
+		"messageBoxes", "interests", "projects" })
 @Entity
 public class Member extends AbstractEntity {
 
 	private String firstName;
-	
+
 	private String surname;
 
 	private List<BlockText> projects;
-	
+
 	private List<BlockText> interests;
 
 	private MessageBox inbox;
@@ -52,13 +52,12 @@ public class Member extends AbstractEntity {
 		this.messageBoxes = new ArrayList<MessageBox>();
 		this.interests = new ArrayList<BlockText>();
 		this.projects = new ArrayList<BlockText>();
-		
+
 	}
 
 	public Member() {
 		this(null);
 	}
-
 
 	@NotNull(message = "{member.firstName.null}")
 	@Size(min = 2, message = "{member.firstName.length}")
@@ -66,7 +65,7 @@ public class Member extends AbstractEntity {
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String name) {
 		this.firstName = name;
 	}
@@ -101,7 +100,7 @@ public class Member extends AbstractEntity {
 	public void setSentItems(MessageBox sentItems) {
 		this.sentItems = sentItems;
 	}
-	
+
 	@XmlIDREF
 	@XmlElementWrapper(name = "messageBoxes")
 	@XmlElement(name = "messageBox")
@@ -115,20 +114,19 @@ public class Member extends AbstractEntity {
 		this.messageBoxes = messageBoxes;
 	}
 
-
 	@XmlElementWrapper(name = "interests")
 	@XmlElement(name = "Interest")
 	@ElementCollection
 	@CollectionTable(name = "MEMBER_INTERESTS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
 	@OrderColumn(name = "SORT_ORDER")
-	public List<BlockText> getInterests() {	
+	public List<BlockText> getInterests() {
 		return interests;
 	}
 
 	public void setInterests(List<BlockText> interests) {
 		this.interests = interests;
 	}
-	
+
 	@XmlElementWrapper(name = "projects")
 	@XmlElement(name = "Project")
 	@ElementCollection
@@ -142,9 +140,12 @@ public class Member extends AbstractEntity {
 		this.projects = projects;
 	}
 
+	public static Member find(String id) {
+		return null;
+	}
 
-
-
-
+	public static List<Member> findAll() {
+		return new ArrayList<Member>();
+	}
 
 }

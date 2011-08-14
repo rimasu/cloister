@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,14 +17,16 @@ import javax.xml.bind.annotation.XmlID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractEntity {
 
-	private String uuid;
+	private String id;
+	
+	private Integer version;
 
 	public AbstractEntity() {
 
 	}
 
-	public AbstractEntity(String uuid) {
-		this.uuid = uuid;
+	public AbstractEntity(String id) {
+		this.id = id;
 	}
 
 	@Id
@@ -31,14 +34,22 @@ public abstract class AbstractEntity {
 	@XmlAttribute
 	@NotNull(message = "{uuid.null}")
 	@Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", message = "{uuid.valid}")
-	public String getUuid() {
-		return uuid;
+	public String getId() {
+		return id;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setId(String id) {
+		this.id = id;
 	}
 	
+	@Version
+	public Integer getVersion(){
+		return version;
+	}
+	
+	public void setVersion(Integer version){
+		this.version = version;
+	}
 	
 	@Override
 	public String toString() {
@@ -46,7 +57,7 @@ public abstract class AbstractEntity {
 				 .append(getClass()//
 				 .getSimpleName())//
 				 .append("#")//
-				 .append(uuid)//
+				 .append(id)//
 				 .toString();
 	}
 
@@ -54,7 +65,7 @@ public abstract class AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -67,10 +78,10 @@ public abstract class AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractEntity other = (AbstractEntity) obj;
-		if (uuid == null) {
-			if (other.uuid != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!uuid.equals(other.uuid))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -55,7 +55,7 @@ public class SnapshotTest extends EntityTest {
 		assertThat(member2.getSentItems(), is(backUp.getMessageBoxes().get(5)));
 						
 		Message message0 = backUp.getMessages().get(0);		
-		assertThat(message0.getUuid(),is("0161c3c0-c288-11e0-962b-0800200c9a66"));
+		assertThat(message0.getId(),is("0161c3c0-c288-11e0-962b-0800200c9a66"));
 		assertThat(message0.getTitle(), is("Title content"));
 		assertThat(message0.getContent(), is ("Content content"));
 		assertThat(message0.getSender(), is(member0));		

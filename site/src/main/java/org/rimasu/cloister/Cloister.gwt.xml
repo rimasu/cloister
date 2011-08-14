@@ -1,4 +1,5 @@
  <module>
     <inherits name="com.google.gwt.user.User"/>
+    <inherits name='com.google.web.bindery.requestfactory.RequestFactory' />
     <entry-point class="org.rimasu.cloister.client.EntryPointImpl"/>
  </module>

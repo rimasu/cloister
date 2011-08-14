@@ -24,7 +24,7 @@ public class AbstractEntityTest extends EntityTest {
 	@Test
 	public void canChangeAMembersUuid() {
 		ConcreteEntity entity = new ConcreteEntity(UUID1);
-		assertThat(entity.getUuid(), is(UUID1));
+		assertThat(entity.getId(), is(UUID1));
 	}
 
 	@Test
