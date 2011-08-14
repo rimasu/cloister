@@ -13,6 +13,7 @@ import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
 import org.rimasu.cloister.server.model.core.MessageBox;
+import org.rimasu.cloister.server.model.event.Callback;
 
 /**
  * Snapshot contains the entire state of the model. This is used as the root
@@ -42,6 +43,11 @@ public class Snapshot {
 	 * All the mesages.
 	 */
 	private List<Message> messages;
+	
+	/**
+	 * All the callbacks.
+	 */
+	private List<Callback> callbacks;
 
 	/**
 	 * Constructor. Create a new, empty, snapshot. All the collection are
@@ -52,6 +58,8 @@ public class Snapshot {
 		messageBoxes = new ArrayList<MessageBox>();
 		members = new ArrayList<Member>();		
 		messages = new ArrayList<Message>();
+		principals = new ArrayList<Principal>();
+		callbacks = new ArrayList<Callback>();
 	}
 
 	@Valid
@@ -96,6 +104,17 @@ public class Snapshot {
 
 	public void setPrincipals(List<Principal> principals) {
 		this.principals = principals;
+	}
+
+	@Valid
+	@XmlElementWrapper(name = "callbacks")
+	@XmlElement(name = "Callback")
+	public List<Callback> getCallbacks() {
+		return callbacks;
+	}
+
+	public void setCallbacks(List<Callback> callbacks) {
+		this.callbacks = callbacks;
 	}
 
 }
