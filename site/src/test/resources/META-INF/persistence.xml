@@ -5,10 +5,12 @@
 	
    <persistence-unit name="TEST_UNIT" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>org.rimasu.cloister.common.model.Member</class> 
-        <class>org.rimasu.cloister.common.model.Message</class>     
-        <class>org.rimasu.cloister.common.model.MessageBox</class>  
-        <class>org.rimasu.cloister.common.model.UuidEntity</class>
+        <class>org.rimasu.cloister.server.model.AbstractEntity</class>          
+        <class>org.rimasu.cloister.server.model.core.Member</class>
+        <class>org.rimasu.cloister.server.model.core.MessageBox</class>
+        <class>org.rimasu.cloister.server.model.core.Message</class>        
+        <class>org.rimasu.cloister.server.model.auth.Principal</class>
+        <class>org.rimasu.cloister.server.model.event.Callback</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
@@ -17,7 +19,7 @@
             <property name="eclipselink.jdbc.password" value=""/>
             <property name="eclipselink.target-database"
                       value="org.eclipse.persistence.platform.database.HSQLPlatform"/>
-            <property name="eclipselink.logging.level" value="FINEST"/>
+            <property name="eclipselink.logging.level" value="INFO"/>
             <property name="eclipselink.orm.throw.exceptions" value="true"/>
 
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

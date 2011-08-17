@@ -2,16 +2,19 @@
 <BackUp>
     <principals>
         <Principal username="AlfredAdams">
-            <passwordHash>$2a$10$6vhdpeL.G9.ULMtYZ5yuIucZ9Pxyy23wSmC29vjvdvm8juwJYizni</passwordHash>
+            <passwordHash>$2a$10$16eAEHeZydha4tDuGUzAUutzIgnXUdZqczUW5CYK3cpVacxQ.Qs9O</passwordHash>
         </Principal>
         <Principal username="BenBenforth">
-            <passwordHash>$2a$10$YvbqvsSVZ9MsslJQQ1bnleXN4f0j70hRqeVPgSK9OOLCc98nS8oLS</passwordHash>
+            <passwordHash>$2a$10$z/DAvAlgONi0EEYIsQ5eV.jHLBjD.5I29MS5lS6qfVNhge9HgE6JK</passwordHash>
         </Principal>
         <Principal username="ChrisCarter">
-            <passwordHash>$2a$10$U6wQ7DfVM5dphPeyOqUEm.v6MKSsOaQRR3iFZghtn6hwdH877u65G</passwordHash>
+            <passwordHash>$2a$10$Xl2Exxk7NsIENEN1wjPJIuK8k6vTl4coMthISRqGJYy68oeNb4eYu</passwordHash>
         </Principal>
         <Principal username="DavidDouglas">
-            <passwordHash>$2a$10$wCt24eXlPem4UD3M2hH5IeFY/f2zqY1Olsy1obE6cbaHzExJcTQrG</passwordHash>
+            <passwordHash>$2a$10$Br628BWLgoxOP3MCuzWK6OiKxYIFz9xrLLvtM0sf2QWF7ppSfEIMi</passwordHash>
+        </Principal>
+        <Principal username="ElizabethEdwards">
+            <passwordHash>$2a$10$v.aVSIoihxCSZvuSqcpco.2bZMElClZ02zQUxWBBjvhGELufwKBES</passwordHash>
         </Principal>
     </principals>
     <messageBoxes>
@@ -37,6 +40,12 @@
             <name>Inbox</name>
         </MessageBox>
         <MessageBox id="8aafcacb-1f58-45b5-961e-5b534e1985ec">
+            <name>Sent Items</name>
+        </MessageBox>
+        <MessageBox id="0f072e3f-9623-49fe-b3e8-19949abd8e8f">
+            <name>Inbox</name>
+        </MessageBox>
+        <MessageBox id="6e1e8a4b-ec8a-4a25-97e4-2362ae2b824d">
             <name>Sent Items</name>
         </MessageBox>
     </messageBoxes>
@@ -93,7 +102,120 @@
             <interests/>
             <projects/>
         </Member>
+        <Member id="cc9aba69-8262-43f8-bedc-b1ee123065d3">
+            <firstName>Elizabeth</firstName>
+            <surname>Edwards</surname>
+            <principal>ElizabethEdwards</principal>
+            <inbox>0f072e3f-9623-49fe-b3e8-19949abd8e8f</inbox>
+            <sentItems>6e1e8a4b-ec8a-4a25-97e4-2362ae2b824d</sentItems>
+            <messageBoxes>
+                <messageBox>0f072e3f-9623-49fe-b3e8-19949abd8e8f</messageBox>
+                <messageBox>6e1e8a4b-ec8a-4a25-97e4-2362ae2b824d</messageBox>
+            </messageBoxes>
+            <interests/>
+            <projects/>
+        </Member>
     </members>
-    <messages/>
+    <messages>
+        <Message id="19bd812b-7e72-4e89-923b-cf966350c324">
+            <content>sample content</content>
+            <location>bfc628d5-3801-420f-baf6-761a1a882caf</location>
+            <recipients>
+                <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+            </recipients>
+            <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="23bdd068-4d93-4da8-9fcd-c6471844aad9">
+            <content>sample content</content>
+            <location>71e0df87-2ca0-4b34-8eab-d3daea5f4479</location>
+            <recipients>
+                <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+            </recipients>
+            <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="2cbb2ca6-4b9d-4fde-b906-dd41e11465b7">
+            <content>sample content</content>
+            <location>2723f934-2474-42b5-a4d1-3fd19abed8a6</location>
+            <recipients>
+                <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+            </recipients>
+            <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="576782b5-2506-427f-ae26-7f93ea3a3200">
+            <content>sample content</content>
+            <location>89d00f43-c76d-43be-b361-e3fbbb2120c6</location>
+            <recipients>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+            </recipients>
+            <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="3125c807-8607-4420-b071-5eb922c3b099">
+            <content>sample content</content>
+            <location>2723f934-2474-42b5-a4d1-3fd19abed8a6</location>
+            <recipients>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+            </recipients>
+            <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="07954a88-78c5-4083-856d-1679bd24cd6f">
+            <content>sample content</content>
+            <location>e60b6b3f-618a-45f7-9055-ae6602297e18</location>
+            <recipients>
+                <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+            </recipients>
+            <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="ae4e6fce-3492-47fb-a828-d16035c042c5">
+            <content>sample content</content>
+            <location>7e50bc40-9f1c-4f22-8fe4-435211152458</location>
+            <recipients>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+                <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
+            </recipients>
+            <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="d959d4a1-c5d9-45f0-9926-215cc7fdd892">
+            <content>sample content</content>
+            <location>e60b6b3f-618a-45f7-9055-ae6602297e18</location>
+            <recipients>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+                <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
+            </recipients>
+            <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+        <Message id="527ed281-dac5-48bb-b943-a65ee7512138">
+            <content>sample content</content>
+            <location>0f072e3f-9623-49fe-b3e8-19949abd8e8f</location>
+            <recipients>
+                <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
+                <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
+            </recipients>
+            <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
+            <status>NEW</status>
+            <title>sample title</title>
+        </Message>
+    </messages>
     <callbacks/>
 </BackUp>

@@ -1,11 +1,17 @@
 package org.rimasu.cloister.server.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.UUID;
+import java.util.Collection;
+import java.util.List;
 
 import org.rimasu.cloister.server.backup.Snapshot;
 import org.rimasu.cloister.server.model.auth.Principal;
+import org.rimasu.cloister.server.model.auth.Role;
 import org.rimasu.cloister.server.model.core.Member;
+import org.rimasu.cloister.server.model.core.Message;
+import org.rimasu.cloister.server.model.core.Message.Status;
 import org.rimasu.cloister.server.model.core.MessageBox;
 import org.rimasu.cloister.server.model.event.Callback;
 import org.rimasu.cloister.server.model.event.Callback.Type;
@@ -78,7 +84,8 @@ public class Fixture {
 	public static Principal createPrincipal(String username, String password) {
 		Principal principal = new Principal();
 		principal.setUsername(username);
-		principal.generatePasswordHash(password);
+		principal.setPasswordHash(PasswordHashTable.getPasswordHash(password));
+		principal.getRoles().add(Role.MEMBER);
 		return principal;
 	}
 
@@ -101,14 +108,62 @@ public class Fixture {
 	public static Snapshot createSnapshot() {
 		Snapshot result = new Snapshot();
 
-		for (int i = 0; i < 4; i++) {
+		int memberCount = 5;
+		for (int i = 0; i < memberCount; i++) {
 			Member member = createMember();
 			result.getPrincipals().add(member.getPrincipal());
 			result.getMessageBoxes().addAll(member.getMessageBoxes());
 			result.getMembers().add(member);
 		}
 
+		int recipientCount = 2;
+		for (int i = 0; i < 3; i++) {
+			Member sender = result.getMembers().get(i % memberCount);
+			List<Member> recipients = new ArrayList<Member>();
+			for (int j = 0; j < recipientCount; j++) {
+				Member recipient = result.getMembers().get(
+						(i + j + 1) % memberCount);
+				recipients.add(recipient);
+			}
+			result.getMessages().addAll(createMessages(sender, recipients));
+		}
+		
+		
+
 		return result;
+	}
+
+	private static List<Message> createMessages(Member sender,
+			List<Member> recipients) {
+		List<Message> result = new ArrayList<Message>();
+		String title = "sample title";
+		String content = "sample content";
+
+		result.add(createMessage(sender, recipients, title, content,
+				sender.getSentItems()));
+
+		for (Member recipient : recipients) {
+			result.add(createMessage(sender, recipients, title, content,
+					recipient.getInbox()));
+		}
+
+		return result;
+	}
+
+	private static Message createMessage(Member sender,
+			List<Member> recipients, String title, String content,
+			MessageBox location) {
+
+		Message message = new Message();
+		message.setId(getUuid());
+		message.setSender(sender);
+		message.setRecipients(recipients);
+		message.setTitle(title);
+		message.setContent(content);
+		message.setStatus(Status.NEW);
+		message.setLocation(location);
+
+		return message;
 	}
 
 }

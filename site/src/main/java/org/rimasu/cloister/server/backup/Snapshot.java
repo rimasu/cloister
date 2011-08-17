@@ -3,6 +3,7 @@ package org.rimasu.cloister.server.backup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -116,6 +117,31 @@ public class Snapshot {
 
 	public void setCallbacks(List<Callback> callbacks) {
 		this.callbacks = callbacks;
+	}
+
+	public static Snapshot create(EntityManager manager) {		
+		Snapshot result = new Snapshot();		
+		result.setPrincipals(Principal.findAll(manager));
+		result.setMembers(Member.findAll(manager));
+		result.setMessageBoxes(MessageBox.findAll(manager));
+		result.setMessages(Message.findAll(manager));
+		result.setCallbacks(Callback.findAll(manager));
+		return result;
+	}
+
+	public void persistTo(EntityManager manager) {
+		persistTo(manager,principals);
+		persistTo(manager,messageBoxes);
+		persistTo(manager,members);
+		persistTo(manager,messages);
+		persistTo(manager,callbacks);
+	}
+	
+	private <T> void persistTo(EntityManager manager, List<T> entities){
+		for(T entity : entities)
+		{
+			manager.persist(entity);
+		}
 	}
 
 }

@@ -1,10 +1,14 @@
 package org.rimasu.cloister.server.model.event;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -12,6 +16,7 @@ import javax.xml.bind.annotation.XmlEnum;
 
 import org.rimasu.cloister.server.model.AbstractEntity;
 import org.rimasu.cloister.server.model.core.Member;
+import org.rimasu.cloister.server.model.core.Message;
 
 
 @Entity
@@ -44,7 +49,7 @@ public class Callback extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@Column(nullable=false)
+	@JoinColumn(nullable=false)
 	public Member getSubject() {
 		return subject;
 	}
@@ -75,4 +80,12 @@ public class Callback extends AbstractEntity {
 	public boolean hasExpired() {
 		return expiryDate.before(Calendar.getInstance());
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static List<Callback> findAll(EntityManager manager) {
+		Query query = manager.createQuery("SELECT e FROM Callback e");
+		return (List<Callback>) query.getResultList();
+	}
+
 }

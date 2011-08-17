@@ -3,8 +3,15 @@ package org.rimasu.cloister.server.model.core;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Query;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,6 +24,7 @@ import org.rimasu.cloister.server.model.AbstractEntity;
 
 
 @Entity
+@Table(name="MESSAGES")
 public class Message extends AbstractEntity  {
 	@XmlEnum
 	public enum Status
@@ -61,6 +69,8 @@ public class Message extends AbstractEntity  {
 	@XmlElementWrapper(name="recipients")
     @XmlElement(name="recipient")
 	@XmlIDREF
+	@JoinTable(name = "MESSAGE_RECIPIENTS", joinColumns = @JoinColumn(name = "MESSAGE"))
+	//@JoinColumn(name="RECIPIENT")
 	public List<Member> getRecipients() {
 		return recipients;
 	}
@@ -103,6 +113,13 @@ public class Message extends AbstractEntity  {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static List<Message> findAll(EntityManager manager) {
+		Query query = manager.createQuery("SELECT e FROM Message e");
+		return (List<Message>) query.getResultList();
 	}
 
 }

@@ -7,10 +7,14 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.Query;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -30,15 +34,16 @@ import org.rimasu.cloister.server.model.auth.Principal;
  * other members (and likely every other UUID). The UUID should never be exposed
  * via a user interface.
  */
-@XmlType(name = "", propOrder = { "firstName", "surname", "principal", "inbox", "sentItems",
-		"messageBoxes", "interests", "projects" })
+@XmlType(name = "", propOrder = { "firstName", "surname", "principal", "inbox",
+		"sentItems", "messageBoxes", "interests", "projects" })
 @Entity
+@Table(name="MEMBERS")
 public class Member extends AbstractEntity {
 
 	private String firstName;
 
 	private String surname;
-	
+
 	private Principal principal;
 
 	private MessageBox inbox;
@@ -46,11 +51,10 @@ public class Member extends AbstractEntity {
 	private MessageBox sentItems;
 
 	private List<MessageBox> messageBoxes;
-	
+
 	private List<BlockText> projects;
 
 	private List<BlockText> interests;
-
 
 	public Member(String uuid) {
 		super(uuid);
@@ -77,7 +81,7 @@ public class Member extends AbstractEntity {
 	@NotNull(message = "{member.surname.null}")
 	@Size(min = 2, message = "{member.surname.length}")
 	@Pattern(regexp = "[A-Za-z\\.\\-\\']*", message = "{member.surname.legalChars}")
-	@Column(nullable=false)
+	@Column(nullable = false)
 	public String getSurname() {
 		return surname;
 	}
@@ -89,7 +93,7 @@ public class Member extends AbstractEntity {
 	@NotNull
 	@XmlIDREF
 	@OneToOne
-	@Column(nullable=false, unique=true)
+	@JoinColumn(nullable = false, unique = true)
 	public Principal getPrincipal() {
 		return principal;
 	}
@@ -100,7 +104,7 @@ public class Member extends AbstractEntity {
 
 	@XmlIDREF
 	@OneToOne
-	@Column(nullable=false)
+	@JoinColumn(nullable = false)
 	public MessageBox getInbox() {
 		return inbox;
 	}
@@ -111,7 +115,7 @@ public class Member extends AbstractEntity {
 
 	@XmlIDREF
 	@OneToOne
-	@Column(nullable=false)
+	@JoinColumn(nullable = false)
 	public MessageBox getSentItems() {
 		return sentItems;
 	}
@@ -124,6 +128,7 @@ public class Member extends AbstractEntity {
 	@XmlElementWrapper(name = "messageBoxes")
 	@XmlElement(name = "messageBox")
 	@OrderColumn(name = "SORT_ORDER")
+	@JoinTable(name = "MEMBER_MESSAGEBOXES", joinColumns = @JoinColumn(name = "MEMBER"))
 	@OneToMany
 	public List<MessageBox> getMessageBoxes() {
 		return messageBoxes;
@@ -167,4 +172,9 @@ public class Member extends AbstractEntity {
 		return new ArrayList<Member>();
 	}
 
+	@SuppressWarnings("unchecked")
+	public static List<Member> findAll(EntityManager manager) {
+		Query query = manager.createQuery("SELECT e FROM Member e");
+		return (List<Member>) query.getResultList();
+	}
 }

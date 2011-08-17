@@ -30,8 +30,7 @@ public class EntityTest {
 	@Before
 	public void beforeEachTest()
 	{
-		Fixture.reset();		
-		Principal.resetSaltSeed();
+		Fixture.reset();				
 	}
 	
 		
