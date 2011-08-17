@@ -30,13 +30,13 @@ public class AbstractEntityTest extends EntityTest {
 	@Test
 	public void nullUuidIsIsReportedByValidationReport() {
 		ConcreteEntity entity = new ConcreteEntity(null);
-		assertInvalid(entity, "uuid");
+		assertInvalid(entity, "id");
 	}
 
 	@Test
 	public void notValidUuidIsReportedByValidationReport() {
 		ConcreteEntity entity = new ConcreteEntity("0237eee0-bNOTV-ALID-0800200c9a666");		
-		assertInvalid(entity, "uuid");
+		assertInvalid(entity, "id");
 	}
 
 	@Test

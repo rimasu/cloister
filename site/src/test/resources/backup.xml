@@ -1,83 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <BackUp>
-	<messageBoxes>
-		<MessageBox uuid="3fb8c780-c34c-11e0-962b-0800200c9a66">
-			<owner>51d04e30-bdd3-11e0-962b-0800200c9a66</owner>		
-			<name>Inbox</name>	
-		</MessageBox>
-		<MessageBox uuid="48fb6280-c34c-11e0-962b-0800200c9a66">
-			<owner>51d04e30-bdd3-11e0-962b-0800200c9a66</owner>	
-			<name>Sent Items</name>		
-		</MessageBox>
-		<MessageBox uuid="51a1e490-c34c-11e0-962b-0800200c9a66">
-			<owner>90cdf640-c289-11e0-962b-0800200c9a66</owner>
-			<name>Inbox</name>
-		</MessageBox>
-		<MessageBox uuid="57547b00-c34c-11e0-962b-0800200c9a66">
-			<owner>90cdf640-c289-11e0-962b-0800200c9a66</owner>
-			<name>Sent Items</name>
-		</MessageBox>
-		<MessageBox uuid="65e1c2e0-c34c-11e0-962b-0800200c9a66">
-			<owner>97347360-c289-11e0-962b-0800200c9a66</owner>	
-			<name>Inbox</name>		
-		</MessageBox>
-		<MessageBox uuid="74e4aff0-c34c-11e0-962b-0800200c9a66">
-			<owner>861475c0-c415-11e0-962b-0800200c9a66</owner>
-			<name>Sent Items</name>
-		</MessageBox>			
-	</messageBoxes>
-	<members>
-		<Member uuid="51d04e30-bdd3-11e0-962b-0800200c9a66">
-			<firstName>Al'fr-e.d</firstName>
-			<inbox>51d04e30-bdd3-11e0-962b-0800200c9a66</inbox>
-			<sentItems>51d04e30-bdd3-11e0-962b-0800200c9a66</sentItems>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-		<Member uuid="90cdf640-c289-11e0-962b-0800200c9a66">
-			<firstName>Catherine</firstName>
-			<inbox>90cdf640-c289-11e0-962b-0800200c9a66</inbox>
-			<sentItems>90cdf640-c289-11e0-962b-0800200c9a66</sentItems>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-		<Member uuid="97347360-c289-11e0-962b-0800200c9a66">
-			<firstName>Richard</firstName>
-			<inbox>97347360-c289-11e0-962b-0800200c9a66</inbox>
-			<sentItems>861475c0-c415-11e0-962b-0800200c9a66</sentItems>
-			<interests>
-				<Interest>
-					<content>Example interest text1</content>
-				</Interest>
-				<Interest>
-					<content>Example interest text2</content>
-				</Interest>
-			</interests>
-		</Member>
-	</members>
-	<messages>
-		<Message uuid="0161c3c0-c288-11e0-962b-0800200c9a66">
-			<location>51a1e490-c34c-11e0-962b-0800200c9a66</location>
-			<sender>51d04e30-bdd3-11e0-962b-0800200c9a66</sender>
-			<recipients>
-				<recipient>90cdf640-c289-11e0-962b-0800200c9a66</recipient>
-				<recipient>97347360-c289-11e0-962b-0800200c9a66</recipient>
-			</recipients>
-			<title>Title content</title>
-			<content>Content content</content>
-			<status>READ</status>
-			<sendDate>2002-09-24</sendDate>
-		</Message>
-	</messages>
+    <principals>
+        <Principal username="AlfredAdams">
+            <passwordHash>$2a$10$6vhdpeL.G9.ULMtYZ5yuIucZ9Pxyy23wSmC29vjvdvm8juwJYizni</passwordHash>
+        </Principal>
+        <Principal username="BenBenforth">
+            <passwordHash>$2a$10$YvbqvsSVZ9MsslJQQ1bnleXN4f0j70hRqeVPgSK9OOLCc98nS8oLS</passwordHash>
+        </Principal>
+        <Principal username="ChrisCarter">
+            <passwordHash>$2a$10$U6wQ7DfVM5dphPeyOqUEm.v6MKSsOaQRR3iFZghtn6hwdH877u65G</passwordHash>
+        </Principal>
+        <Principal username="DavidDouglas">
+            <passwordHash>$2a$10$wCt24eXlPem4UD3M2hH5IeFY/f2zqY1Olsy1obE6cbaHzExJcTQrG</passwordHash>
+        </Principal>
+    </principals>
+    <messageBoxes>
+        <MessageBox id="9c1eb59d-9740-4a3d-8ad6-145f06d9e786">
+            <name>Inbox</name>
+        </MessageBox>
+        <MessageBox id="bfc628d5-3801-420f-baf6-761a1a882caf">
+            <name>Sent Items</name>
+        </MessageBox>
+        <MessageBox id="71e0df87-2ca0-4b34-8eab-d3daea5f4479">
+            <name>Inbox</name>
+        </MessageBox>
+        <MessageBox id="89d00f43-c76d-43be-b361-e3fbbb2120c6">
+            <name>Sent Items</name>
+        </MessageBox>
+        <MessageBox id="2723f934-2474-42b5-a4d1-3fd19abed8a6">
+            <name>Inbox</name>
+        </MessageBox>
+        <MessageBox id="7e50bc40-9f1c-4f22-8fe4-435211152458">
+            <name>Sent Items</name>
+        </MessageBox>
+        <MessageBox id="e60b6b3f-618a-45f7-9055-ae6602297e18">
+            <name>Inbox</name>
+        </MessageBox>
+        <MessageBox id="8aafcacb-1f58-45b5-961e-5b534e1985ec">
+            <name>Sent Items</name>
+        </MessageBox>
+    </messageBoxes>
+    <members>
+        <Member id="d741a462-9b58-460d-b6e7-187276a86d26">
+            <firstName>Alfred</firstName>
+            <surname>Adams</surname>
+            <principal>AlfredAdams</principal>
+            <inbox>9c1eb59d-9740-4a3d-8ad6-145f06d9e786</inbox>
+            <sentItems>bfc628d5-3801-420f-baf6-761a1a882caf</sentItems>
+            <messageBoxes>
+                <messageBox>9c1eb59d-9740-4a3d-8ad6-145f06d9e786</messageBox>
+                <messageBox>bfc628d5-3801-420f-baf6-761a1a882caf</messageBox>
+            </messageBoxes>
+            <interests/>
+            <projects/>
+        </Member>
+        <Member id="ed93a4e7-642c-4a10-87c5-3e497e077e5b">
+            <firstName>Ben</firstName>
+            <surname>Benforth</surname>
+            <principal>BenBenforth</principal>
+            <inbox>71e0df87-2ca0-4b34-8eab-d3daea5f4479</inbox>
+            <sentItems>89d00f43-c76d-43be-b361-e3fbbb2120c6</sentItems>
+            <messageBoxes>
+                <messageBox>71e0df87-2ca0-4b34-8eab-d3daea5f4479</messageBox>
+                <messageBox>89d00f43-c76d-43be-b361-e3fbbb2120c6</messageBox>
+            </messageBoxes>
+            <interests/>
+            <projects/>
+        </Member>
+        <Member id="a3bd3f4a-0b96-4286-97dd-4da5c70eccde">
+            <firstName>Chris</firstName>
+            <surname>Carter</surname>
+            <principal>ChrisCarter</principal>
+            <inbox>2723f934-2474-42b5-a4d1-3fd19abed8a6</inbox>
+            <sentItems>7e50bc40-9f1c-4f22-8fe4-435211152458</sentItems>
+            <messageBoxes>
+                <messageBox>2723f934-2474-42b5-a4d1-3fd19abed8a6</messageBox>
+                <messageBox>7e50bc40-9f1c-4f22-8fe4-435211152458</messageBox>
+            </messageBoxes>
+            <interests/>
+            <projects/>
+        </Member>
+        <Member id="28c92515-ddee-4cb0-800e-df993145e7a7">
+            <firstName>David</firstName>
+            <surname>Douglas</surname>
+            <principal>DavidDouglas</principal>
+            <inbox>e60b6b3f-618a-45f7-9055-ae6602297e18</inbox>
+            <sentItems>8aafcacb-1f58-45b5-961e-5b534e1985ec</sentItems>
+            <messageBoxes>
+                <messageBox>e60b6b3f-618a-45f7-9055-ae6602297e18</messageBox>
+                <messageBox>8aafcacb-1f58-45b5-961e-5b534e1985ec</messageBox>
+            </messageBoxes>
+            <interests/>
+            <projects/>
+        </Member>
+    </members>
+    <messages/>
+    <callbacks/>
 </BackUp>

@@ -42,14 +42,14 @@ public class CallbackTest extends EntityTest {
 	}
 
 	@Test
-	public void nullMemberIsInvalid() {
+	public void canTestExpiry() {
 		Callback callback = Fixture.createCallback();
 		Calendar date = Calendar.getInstance();
 		date.add(Calendar.MINUTE, -10);
 		callback.setExpiryDate(date);
-		assertTrue(callback.isExpired());
+		assertTrue(callback.hasExpired());
 		date.add(Calendar.MINUTE,20);
 		callback.setExpiryDate(date);
-		assertFalse(callback.isExpired());
+		assertFalse(callback.hasExpired());
 	}
 }

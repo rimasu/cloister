@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlType;
 
 import org.rimasu.cloister.server.model.AbstractEntity;
+import org.rimasu.cloister.server.model.auth.Principal;
 
 /**
  * Member is responsible for storing the all details stored for a member, apart
@@ -28,7 +30,7 @@ import org.rimasu.cloister.server.model.AbstractEntity;
  * other members (and likely every other UUID). The UUID should never be exposed
  * via a user interface.
  */
-@XmlType(name = "", propOrder = { "firstName", "inbox", "sentItems",
+@XmlType(name = "", propOrder = { "firstName", "surname", "principal", "inbox", "sentItems",
 		"messageBoxes", "interests", "projects" })
 @Entity
 public class Member extends AbstractEntity {
@@ -36,23 +38,25 @@ public class Member extends AbstractEntity {
 	private String firstName;
 
 	private String surname;
-
-	private List<BlockText> projects;
-
-	private List<BlockText> interests;
+	
+	private Principal principal;
 
 	private MessageBox inbox;
 
 	private MessageBox sentItems;
 
 	private List<MessageBox> messageBoxes;
+	
+	private List<BlockText> projects;
+
+	private List<BlockText> interests;
+
 
 	public Member(String uuid) {
 		super(uuid);
 		this.messageBoxes = new ArrayList<MessageBox>();
 		this.interests = new ArrayList<BlockText>();
 		this.projects = new ArrayList<BlockText>();
-
 	}
 
 	public Member() {
@@ -73,6 +77,7 @@ public class Member extends AbstractEntity {
 	@NotNull(message = "{member.surname.null}")
 	@Size(min = 2, message = "{member.surname.length}")
 	@Pattern(regexp = "[A-Za-z\\.\\-\\']*", message = "{member.surname.legalChars}")
+	@Column(nullable=false)
 	public String getSurname() {
 		return surname;
 	}
@@ -81,8 +86,21 @@ public class Member extends AbstractEntity {
 		this.surname = surname;
 	}
 
+	@NotNull
 	@XmlIDREF
 	@OneToOne
+	@Column(nullable=false, unique=true)
+	public Principal getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(Principal principal) {
+		this.principal = principal;
+	}
+
+	@XmlIDREF
+	@OneToOne
+	@Column(nullable=false)
 	public MessageBox getInbox() {
 		return inbox;
 	}
@@ -93,6 +111,7 @@ public class Member extends AbstractEntity {
 
 	@XmlIDREF
 	@OneToOne
+	@Column(nullable=false)
 	public MessageBox getSentItems() {
 		return sentItems;
 	}

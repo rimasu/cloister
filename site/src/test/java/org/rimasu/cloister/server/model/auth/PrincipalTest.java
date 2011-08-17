@@ -25,7 +25,7 @@ public class PrincipalTest extends EntityTest {
 	{
 		Principal principal = Fixture.createPrincipal();
 		principal.setUsername(null);
-		assertInvalid(principal, "use");
+		assertInvalid(principal, "username");
 	}
 
 }

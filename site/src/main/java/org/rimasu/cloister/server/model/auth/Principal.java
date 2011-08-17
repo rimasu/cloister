@@ -1,5 +1,6 @@
 package org.rimasu.cloister.server.model.auth;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -8,31 +9,46 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlID;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.rimasu.cloister.server.model.core.Member;
 
 @Entity
 public class Principal  {
+	
+	private static SecureRandom random = new SecureRandom();
 
 	private String username;
 
 	private String passwordHash;
 
-	private Member member;
-
 	private List<Role> roles;
+
+	
 
 	public Principal() {
 	}
+	
+	
+	/**
+	 * Override the source of randomness used to generate password salts
+	 * so that a predictable source can be used during testing. This method
+	 * MUST NOT be used in production.
+	 * 
+	 * @param random
+	 */
+	public static void resetSaltSeed(){
+		Principal.random.setSeed(0);
+	}
 
 	@Id
+	@XmlID
+	@XmlAttribute
 	@NotNull
 	@Size(min = 4)
 	@Column(unique = true, nullable = false)
@@ -54,20 +70,8 @@ public class Principal  {
 		this.passwordHash = passwordHash;
 	}
 
-	@XmlIDREF
-	@OneToOne
-	@NotNull
-	@Column(nullable = false)
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
 	@XmlElementWrapper(name = "roles")
-	@XmlElement(name = "role")
+	@XmlElement(name = "Role")
 	@ElementCollection
 	@CollectionTable(name = "PRINCIPAL_ROLES", joinColumns = @JoinColumn(name = "PRINCIPAL_ID"))
 	public List<Role> getRoles() {
@@ -83,7 +87,8 @@ public class Principal  {
 	 * @param clearTextPassword
 	 */
 	public void generatePasswordHash(String clearTextPassword) {
-		setPasswordHash(BCrypt.hashpw(clearTextPassword, BCrypt.gensalt()));
+		
+		setPasswordHash(BCrypt.hashpw(clearTextPassword, BCrypt.gensalt(10, random)));
 	}
 
 	/**

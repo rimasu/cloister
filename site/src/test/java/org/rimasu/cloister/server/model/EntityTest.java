@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.security.SecureRandom;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -11,7 +12,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.rimasu.cloister.server.model.auth.Principal;
 
 public class EntityTest {
 	
@@ -22,6 +25,13 @@ public class EntityTest {
 		ValidatorFactory factory = Validation.byDefaultProvider().configure()
 				.buildValidatorFactory();
 		validator = factory.getValidator();
+	}
+	
+	@Before
+	public void beforeEachTest()
+	{
+		Fixture.reset();		
+		Principal.resetSaltSeed();
 	}
 	
 		

@@ -19,10 +19,16 @@ import org.rimasu.cloister.server.model.event.Callback;
  * Snapshot contains the entire state of the model. This is used as the root
  * element when generating or parsing XML.
  */
-@XmlType(name = "", propOrder = { "messageBoxes", "members", "messages" })
+@XmlType(name = "", propOrder = { "principals", "messageBoxes", "members", "messages", "callbacks" })
 @XmlRootElement(name = "BackUp")
 public class Snapshot {
 	
+		
+	/**
+	 * All the principals.
+	 */
+	private List<Principal> principals;
+
 	
 	/**
 	 * All the message boxes.
@@ -33,11 +39,6 @@ public class Snapshot {
 	 * All the members.
 	 */
 	private List<Member> members;
-	
-	/**
-	 * All the principals.
-	 */
-	private List<Principal> principals;
 
 	/**
 	 * All the mesages.

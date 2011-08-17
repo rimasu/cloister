@@ -22,8 +22,10 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.rimasu.cloister.server.model.EntityTest;
+import org.rimasu.cloister.server.model.Fixture;
 import org.rimasu.cloister.server.model.core.BlockText;
 import org.rimasu.cloister.server.model.core.Member;
 
@@ -48,7 +50,11 @@ public class MemberTest extends EntityTest {
 
 	private DatabaseConnection connection;
 
-
+	
+	@Before
+	public void beforeEachTest(){
+		Fixture.reset();
+	}
 
 	@Test
 	public void canChangeMembersFirstName() {
@@ -61,49 +67,49 @@ public class MemberTest extends EntityTest {
 
 	@Test
 	public void canCreateAValidationReportFromAMember() {
-		assertValid(createPopulatedMember());
+		assertValid(Fixture.createMember());
 	}
 
 
 
 	@Test
 	public void nullFirstNameIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName(null);
 		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void firstNameWithSpaceIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName("Alfr ed");
 		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void singleCharFristNameIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName("A");
 		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void digitInFristNameIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName("Alfr3d");
 		assertInvalid(member, "firstName");
 	}
 
 	@Test
 	public void semicolonInFristNameIsReportedByValidationReport() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName("Alfr;d");
 		assertInvalid(member, "firstName");		
 	}
 
 	@Test
 	public void firstNameCanContainDotDashAndApostrophe() {
-		Member member = createPopulatedMember();
+		Member member = Fixture.createMember();
 		member.setFirstName("Alfr'ed");
 		assertValid(member);
 		member.setFirstName("Alfr-ed");
@@ -114,11 +120,11 @@ public class MemberTest extends EntityTest {
 
 	@Test
 	public void canChangeMembersInterests() {
-		Member member = createPopulatedMember();
+		Member member =Fixture.createMember();
 		assertNotNull(member.getInterests());
-		assertThat(member.getInterests().size(), is(1));
+		assertThat(member.getInterests().size(), is(0));
 		member.getInterests().add(new BlockText(INTEREST1));
-		assertThat(member.getInterests().size(), is(2));
+		assertThat(member.getInterests().size(), is(1));
 	}
 
 
@@ -148,8 +154,8 @@ public class MemberTest extends EntityTest {
 
 		EntityManager em = createEntityManager();
 		em.getTransaction().begin();
-		Member member = createPopulatedMember();
-		member.setUuid(UUID2);
+		Member member = Fixture.createMember();
+		member.setId(UUID2);
 		em.persist(member);
 		em.flush();
 		em.getTransaction().commit();
@@ -159,13 +165,6 @@ public class MemberTest extends EntityTest {
 		new DbUnitAssert().assertEquals(expected, actual);
 	}
 
-	private Member createPopulatedMember() {
-		Member member = new Member();
-		member.setUuid(UUID);
-		member.setFirstName(FIRST_NAME);
-		member.getInterests().add(new BlockText(INTEREST1));
-		return member;
-	}
 
 	@After
 	public void closeDatabase() throws SQLException {

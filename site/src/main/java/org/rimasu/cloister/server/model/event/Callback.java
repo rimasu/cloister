@@ -2,7 +2,12 @@ package org.rimasu.cloister.server.model.event;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlEnum;
 
 import org.rimasu.cloister.server.model.AbstractEntity;
@@ -27,6 +32,8 @@ public class Callback extends AbstractEntity {
 	
 	private boolean used;
 
+	@NotNull
+	@Column(nullable=false)
 	public Type getType() {
 		return type;
 	}
@@ -35,6 +42,9 @@ public class Callback extends AbstractEntity {
 		this.type = type;
 	}
 
+	@NotNull
+	@ManyToOne
+	@Column(nullable=false)
 	public Member getSubject() {
 		return subject;
 	}
@@ -43,6 +53,9 @@ public class Callback extends AbstractEntity {
 		this.subject = subject;
 	}
 
+	@NotNull	
+	@Column(nullable=false)
+	@Temporal(value = TemporalType.TIMESTAMP)
 	public Calendar getExpiryDate() {
 		return expiryDate;
 	}
@@ -59,7 +72,7 @@ public class Callback extends AbstractEntity {
 		this.used = used;
 	}
 
-	public boolean isExpired() {
-		return false;
+	public boolean hasExpired() {
+		return expiryDate.before(Calendar.getInstance());
 	}
 }

@@ -2,7 +2,7 @@
 	<table name="MESSAGEBOX">
 		<column>uuid</column>
 		<column>name</column>
-		<row>
+		<row>		
 			<value>c38ba850-c34e-11e0-962b-0800200c9a66</value>
 			<value>Sent Items</value>
 		</row>
