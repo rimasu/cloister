@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.rimasu.cloister.server.backup.Snapshot;
 import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.auth.Role;
+import org.rimasu.cloister.server.model.core.BlockText;
 import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
 import org.rimasu.cloister.server.model.core.Message.Status;
@@ -26,6 +28,8 @@ public class Fixture {
 	private static int nextFirstName = 0;
 	private static int nextSurname = 0;
 
+	private static Calendar fictionalNow = new GregorianCalendar(2011, 8, 25);
+
 	public static void reset() {
 		UuidTable.reset();
 		nextFirstName = 0;
@@ -37,7 +41,6 @@ public class Fixture {
 
 		MessageBox inbox = new MessageBox(getUuid(), "Inbox");
 		MessageBox sentItems = new MessageBox(getUuid(), "Sent Items");
-
 		member.setInbox(inbox);
 		member.setSentItems(sentItems);
 		member.getMessageBoxes().add(inbox);
@@ -45,7 +48,39 @@ public class Fixture {
 		member.setFirstName(getFirstName());
 		member.setSurname(getSurname());
 		member.setPrincipal(createPrinicpal(member));
+		member.getProjects().addAll(createProjects(member, 3));
+		member.getInterests().addAll(createInterests(member, 3));
 		return member;
+	}
+
+	private static List<BlockText> createInterests(Member member, int count) {
+		List<BlockText> result = new ArrayList<BlockText>();
+		for (int i = 0; i < count; i++) {
+			result.add(createInterest(member, i));
+		}
+		return result;
+	}
+
+	private static BlockText createInterest(Member member, int number) {
+		BlockText result = new BlockText();
+		result.setContent(String.format("%s's interest number %d",
+				member.getFirstName(), number + 1));
+		return result;
+	}
+
+	private static List<BlockText> createProjects(Member member, int count) {
+		List<BlockText> result = new ArrayList<BlockText>();
+		for (int i = 0; i < count; i++) {
+			result.add(createInterest(member, i));
+		}
+		return result;
+	}
+
+	private static BlockText createProject(Member member, int number) {
+		BlockText result = new BlockText();
+		result.setContent(String.format("%s's project number %d",
+				member.getFirstName(), number));
+		return result;
 	}
 
 	public static String getUserName(Member member) {
@@ -86,6 +121,9 @@ public class Fixture {
 		principal.setUsername(username);
 		principal.setPasswordHash(PasswordHashTable.getPasswordHash(password));
 		principal.getRoles().add(Role.MEMBER);
+		if (principal.getUsername().length()%2==0) {
+			principal.getRoles().add(Role.SUPERVISOR);
+		}
 		return principal;
 	}
 
@@ -107,29 +145,58 @@ public class Fixture {
 
 	public static Snapshot createSnapshot() {
 		Snapshot result = new Snapshot();
+		
+		result.setCaptureDate(fictionalNow);
 
-		int memberCount = 5;
-		for (int i = 0; i < memberCount; i++) {
-			Member member = createMember();
+		List<Member> members = createMembers(5);
+
+		for (Member member : members) {
 			result.getPrincipals().add(member.getPrincipal());
 			result.getMessageBoxes().addAll(member.getMessageBoxes());
-			result.getMembers().add(member);
 		}
 
-		int recipientCount = 2;
+		result.setMembers(members);
+		result.setMessages(createMessages(members, 2));
+		result.setCallbacks(createCallbacks(members));
+
+		return result;
+	}
+
+	private static List<Callback> createCallbacks(List<Member> members) {
+		List<Callback> result = new ArrayList<Callback>();
+		for (Member member : members) {
+			Callback callback = new Callback();
+			callback.setSubject(member);
+			callback.setId(getUuid());
+			callback.setUsed(false);
+			callback.setExpiryDate(fictionalNow);
+			callback.setType(Type.PASSWORD_RESET);
+			result.add(callback);
+		}
+		return result;
+	}
+
+	private static List<Member> createMembers(int memberCount) {
+		List<Member> result = new ArrayList<Member>();
+		for (int i = 0; i < memberCount; i++) {
+
+			result.add(createMember());
+		}
+		return result;
+	}
+
+	private static List<Message> createMessages(List<Member> members,
+			int recipientCount) {
+		List<Message> result = new ArrayList<Message>();
 		for (int i = 0; i < 3; i++) {
-			Member sender = result.getMembers().get(i % memberCount);
+			Member sender = members.get(i % members.size());
 			List<Member> recipients = new ArrayList<Member>();
 			for (int j = 0; j < recipientCount; j++) {
-				Member recipient = result.getMembers().get(
-						(i + j + 1) % memberCount);
+				Member recipient = members.get((i + j + 1) % members.size());
 				recipients.add(recipient);
 			}
-			result.getMessages().addAll(createMessages(sender, recipients));
+			result.addAll(createMessages(sender, recipients));
 		}
-		
-		
-
 		return result;
 	}
 
@@ -162,6 +229,7 @@ public class Fixture {
 		message.setContent(content);
 		message.setStatus(Status.NEW);
 		message.setLocation(location);
+		message.setSendDate(fictionalNow);
 
 		return message;
 	}

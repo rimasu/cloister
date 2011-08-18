@@ -1,13 +1,17 @@
 package org.rimasu.cloister.server.backup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 import org.rimasu.cloister.server.model.auth.Principal;
@@ -20,11 +24,15 @@ import org.rimasu.cloister.server.model.event.Callback;
  * Snapshot contains the entire state of the model. This is used as the root
  * element when generating or parsing XML.
  */
-@XmlType(name = "", propOrder = { "principals", "messageBoxes", "members", "messages", "callbacks" })
+@XmlType(name = "", propOrder = { "captureDate","principals", "messageBoxes", "members", "messages", "callbacks" })
 @XmlRootElement(name = "BackUp")
 public class Snapshot {
 	
-		
+	/**
+	 * The date the snapshot was taken.
+	 */	
+	private Calendar captureDate;
+	
 	/**
 	 * All the principals.
 	 */
@@ -63,6 +71,18 @@ public class Snapshot {
 		principals = new ArrayList<Principal>();
 		callbacks = new ArrayList<Callback>();
 	}
+	
+	@NotNull
+	@XmlSchemaType(name="date")
+	@XmlAttribute
+	public Calendar getCaptureDate() {
+		return captureDate;
+	}
+	
+	public void setCaptureDate(Calendar captureDate){
+		this.captureDate = captureDate;
+	}
+
 
 	@Valid
 	@XmlElementWrapper(name = "members")
@@ -143,5 +163,6 @@ public class Snapshot {
 			manager.persist(entity);
 		}
 	}
+
 
 }

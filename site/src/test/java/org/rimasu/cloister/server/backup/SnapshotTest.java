@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,10 +21,14 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.dbunit.Assertion;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.rimasu.cloister.server.backup.Snapshot;
@@ -39,8 +46,22 @@ import org.rimasu.cloister.server.model.core.Message;
  */
 public class SnapshotTest extends EntityTest {
 
+	/**
+	 * Name of persistence unit used during tests.
+	 */
 	private static final String TEST_PERSISTENCE_UNIT = "TEST_UNIT";
 
+	/**
+	 * List of tables that are exclude from simple DBUNIT comparison because
+	 * they do not have a primary key.
+	 */
+	private static final Set<String> EXCLUDED_TABLES = new HashSet<String>(
+			Arrays.asList("MEMBER_INTERESTS", "MEMBER_PROJECTS",
+					"PRINCIPAL_ROLES"));
+
+	/**
+	 * Connection used by DBUNIT to access in memory database.
+	 */
 	private DatabaseConnection connection;
 
 	@Test
@@ -73,22 +94,10 @@ public class SnapshotTest extends EntityTest {
 		assertThat(member2.getFirstName(), is("Chris"));
 		assertThat(member2.getInbox(), is(backUp.getMessageBoxes().get(4)));
 		assertThat(member2.getSentItems(), is(backUp.getMessageBoxes().get(5)));
-
-		// Message message0 = backUp.getMessages().get(0);
-		// assertThat(message0.getId(),
-		// is("0161c3c0-c288-11e0-962b-0800200c9a66"));
-		// assertThat(message0.getTitle(), is("Title content"));
-		// assertThat(message0.getContent(), is("Content content"));
-		// assertThat(message0.getSender(), is(member0));
-		// assertThat(message0.getRecipients().size(), is(2));
-		// assertThat(message0.getRecipients().get(0), is(member1));
-		// assertThat(message0.getRecipients().get(1), is(member2));
-		// assertThat(message0.getStatus(), is(Message.Status.READ));
-		// assertThat(message0.getSendDate());
 	}
 
 	@Test
-	public void canExportXml() throws JAXBException {
+	public void canExportXml() throws JAXBException, IOException {
 		Snapshot backUp = Fixture.createSnapshot();
 		JAXBContext context = JAXBContext.newInstance(getClass().getPackage()
 				.getName());
@@ -98,8 +107,11 @@ public class SnapshotTest extends EntityTest {
 		StringWriter dest = new StringWriter();
 
 		marshaller.marshal(backUp, dest);
-		System.out.println(dest);
+		dest.close();
+		String actual = dest.toString();
+		System.out.println(actual);
 
+		// TODO compare actual with expected.
 	}
 
 	@Test
@@ -109,48 +121,85 @@ public class SnapshotTest extends EntityTest {
 		assertValid(backUp);
 		// make member first name invalid.
 		backUp.getMembers().get(3).setFirstName("");
-
 		assertInvalid(backUp, "members[3].firstName");
 	}
 
 	@Test
-	public void canCreateSnapshotFromEntityManager() throws JAXBException,
-			SQLException, DatabaseUnitException, IOException {
-
-
+	public void canPopulateEntityManagerFromSnapshot() throws Exception {
 		EntityManager manager = createEntityManager();
-		
 		Snapshot source = Fixture.createSnapshot();
-		
 		manager.getTransaction().begin();
-		source.persistTo(manager);		
+		source.persistTo(manager);
 		manager.flush();
 		manager.getTransaction().commit();
-		
+		assertDataAsExpected("backup.dbunit.xml");
+	}
 
+	@Test
+	public void canExtractSnapshotFromEntityManager() throws SQLException,
+			DatabaseUnitException {
+		EntityManager manager = createEntityManager();
+		populateDataBase("backup.dbunit.xml");		
+		Snapshot snapshot = Snapshot.create(manager);
+		assertNotNull(snapshot.getCaptureDate());
+		System.out.println(snapshot);
+	}
+
+	private void populateDataBase(String initialContents) throws SQLException,
+			DatabaseUnitException {
 		createFreshConnection();
+		try {
+			IDataSet template = loadDataSetFromClassPath(initialContents);
+			DatabaseOperation.INSERT.execute(connection, template);
+		} finally {
+			disconnect();
+		}
+	}
 
-		//Snapshot result = Snapshot.create(manager);
+	/**
+	 * Assert that the database contains the expected content.
+	 * 
+	 * @param expectedDatabaseConfig
+	 *            classpath location of XML file containing a complete
+	 *            description of the expected database state.
+	 * @throws SQLException
+	 *             if failed to access database.
+	 * @throws DatabaseUnitException
+	 *             if failed to access database.
+	 * @throws DataSetException
+	 *             if failed to access data-set backup.
+	 * @throws IOException
+	 *             if failed to generate XML dump of actual database state.
+	 */
+	private void assertDataAsExpected(String expectedDatabaseConfig)
+			throws SQLException, DatabaseUnitException, DataSetException,
+			IOException {
+		createFreshConnection();
+		IDataSet actual = getCurrentDataset();
+		IDataSet expected = loadDataSetFromClassPath(expectedDatabaseConfig);
 
-		IDataSet set = getCurrentDataset();
-		StringWriter dest = new StringWriter();
-		
-		FlatXmlDataSet.write(set, dest);
-		
-		System.out.println(dest.toString());
+		try {
+			for (String tableName : expected.getTableNames()) {
+				if (!EXCLUDED_TABLES.contains(tableName)) {
+					Assertion.assertEquals(expected.getTable(tableName),
+							actual.getTable(tableName));
+				}
+			}
+		} catch (AssertionError e) {
+			StringWriter writer = new StringWriter();
+			writer.append("actual:");
+			FlatXmlDataSet.write(actual, writer);
+			writer.close();
+			System.out.println(writer);
+			throw e;
+		}
+	}
 
-		
-//
-//		JAXBContext context = JAXBContext.newInstance(getClass().getPackage()
-//				.getName());
-//
-//		Marshaller marshaller = context.createMarshaller();
-//		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//		StringWriter dest = new StringWriter();
-//
-//		marshaller.marshal(result, dest);
-//		System.out.println(dest);
-
+	private IDataSet loadDataSetFromClassPath(String path)
+			throws DataSetException {
+		FlatXmlDataSetBuilder bld = new FlatXmlDataSetBuilder();
+		ClassLoader loader = getClass().getClassLoader();
+		return bld.build(loader.getResource(path));
 	}
 
 	/**
@@ -167,6 +216,11 @@ public class SnapshotTest extends EntityTest {
 		return connection.createDataSet();
 	}
 
+	/**
+	 * Create a new entity manager.
+	 * 
+	 * @return new entity manager.
+	 */
 	private EntityManager createEntityManager() {
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(TEST_PERSISTENCE_UNIT);
@@ -174,13 +228,28 @@ public class SnapshotTest extends EntityTest {
 		return em;
 	}
 
-	private void createFreshConnection() throws SQLException, DatabaseUnitException {
+	/**
+	 * Create a new connection to database (will close any existing connection).
+	 * 
+	 * @throws SQLException
+	 *             if failed to close or create connection.
+	 * @throws DatabaseUnitException
+	 *             if failed wrap connection for DBUNIT.
+	 */
+	private void createFreshConnection() throws SQLException,
+			DatabaseUnitException {
 		disconnect();
 		connection = new DatabaseConnection(
 				DriverManager.getConnection("jdbc:hsqldb:mem:test"));
 
 	}
 
+	/**
+	 * Close the database connection (if any).
+	 * 
+	 * @throws SQLException
+	 *             if failed to close connection.
+	 */
 	private void disconnect() throws SQLException {
 		if (connection != null) {
 			connection.close();

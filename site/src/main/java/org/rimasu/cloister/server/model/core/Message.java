@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlEnum;
@@ -43,12 +44,16 @@ public class Message extends AbstractEntity  {
 	private Calendar sendDate;
 	
 	private String title;
+
+	private String content;
 	
 	private Status status;
 	
 
 	@XmlIDREF
 	@ManyToOne
+	@NotNull
+	@JoinColumn(nullable=false)
 	public MessageBox getLocation() {
 		return location;
 	}
@@ -58,6 +63,8 @@ public class Message extends AbstractEntity  {
 	}
 	
 	@XmlIDREF
+	@NotNull
+	@JoinColumn(nullable=false)
 	public Member getSender() {
 		return sender;
 	}
@@ -70,7 +77,6 @@ public class Message extends AbstractEntity  {
     @XmlElement(name="recipient")
 	@XmlIDREF
 	@JoinTable(name = "MESSAGE_RECIPIENTS", joinColumns = @JoinColumn(name = "MESSAGE"))
-	//@JoinColumn(name="RECIPIENT")
 	public List<Member> getRecipients() {
 		return recipients;
 	}
@@ -79,6 +85,8 @@ public class Message extends AbstractEntity  {
 		this.recipients = recipients;
 	}
 
+	@NotNull
+	@Column(nullable=false)
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@XmlSchemaType(name="date")
 	public Calendar getSendDate() {
@@ -89,6 +97,8 @@ public class Message extends AbstractEntity  {
 		this.sendDate = sendDate;
 	}
 
+	@NotNull
+	@Column(nullable=false)
 	public String getTitle() {
 		return title;
 	}
@@ -97,6 +107,8 @@ public class Message extends AbstractEntity  {
 		this.title = title;
 	}
 
+	@NotNull
+	@Column(nullable=false)
 	public String getContent() {
 		return content;
 	}
@@ -105,8 +117,9 @@ public class Message extends AbstractEntity  {
 		this.content = content;
 	}
 
-	private String content;
 
+	@NotNull
+	@Column(nullable=false)
 	public Status getStatus() {
 		return status;
 	}

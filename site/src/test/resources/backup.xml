@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<BackUp>
+<BackUp captureDate="2011-09-25T00:00:00+01:00">
     <principals>
         <Principal username="AlfredAdams">
             <passwordHash>$2a$10$16eAEHeZydha4tDuGUzAUutzIgnXUdZqczUW5CYK3cpVacxQ.Qs9O</passwordHash>
+            <roles>
+                <Role>MEMBER</Role>
+            </roles>
         </Principal>
         <Principal username="BenBenforth">
             <passwordHash>$2a$10$z/DAvAlgONi0EEYIsQ5eV.jHLBjD.5I29MS5lS6qfVNhge9HgE6JK</passwordHash>
+            <roles>
+                <Role>MEMBER</Role>
+            </roles>
         </Principal>
         <Principal username="ChrisCarter">
             <passwordHash>$2a$10$Xl2Exxk7NsIENEN1wjPJIuK8k6vTl4coMthISRqGJYy68oeNb4eYu</passwordHash>
+            <roles>
+                <Role>MEMBER</Role>
+            </roles>
         </Principal>
         <Principal username="DavidDouglas">
             <passwordHash>$2a$10$Br628BWLgoxOP3MCuzWK6OiKxYIFz9xrLLvtM0sf2QWF7ppSfEIMi</passwordHash>
+            <roles>
+                <Role>MEMBER</Role>
+                <Role>SUPERVISOR</Role>
+            </roles>
         </Principal>
         <Principal username="ElizabethEdwards">
             <passwordHash>$2a$10$v.aVSIoihxCSZvuSqcpco.2bZMElClZ02zQUxWBBjvhGELufwKBES</passwordHash>
+            <roles>
+                <Role>MEMBER</Role>
+                <Role>SUPERVISOR</Role>
+            </roles>
         </Principal>
     </principals>
     <messageBoxes>
@@ -60,8 +77,28 @@
                 <messageBox>9c1eb59d-9740-4a3d-8ad6-145f06d9e786</messageBox>
                 <messageBox>bfc628d5-3801-420f-baf6-761a1a882caf</messageBox>
             </messageBoxes>
-            <interests/>
-            <projects/>
+            <interests>
+                <Interest>
+                    <content>Alfred&amp;#39;s interest number 1</content>
+                </Interest>
+                <Interest>
+                    <content>Alfred&amp;#39;s interest number 2</content>
+                </Interest>
+                <Interest>
+                    <content>Alfred&amp;#39;s interest number 3</content>
+                </Interest>
+            </interests>
+            <projects>
+                <Project>
+                    <content>Alfred&amp;#39;s interest number 1</content>
+                </Project>
+                <Project>
+                    <content>Alfred&amp;#39;s interest number 2</content>
+                </Project>
+                <Project>
+                    <content>Alfred&amp;#39;s interest number 3</content>
+                </Project>
+            </projects>
         </Member>
         <Member id="ed93a4e7-642c-4a10-87c5-3e497e077e5b">
             <firstName>Ben</firstName>
@@ -73,8 +110,28 @@
                 <messageBox>71e0df87-2ca0-4b34-8eab-d3daea5f4479</messageBox>
                 <messageBox>89d00f43-c76d-43be-b361-e3fbbb2120c6</messageBox>
             </messageBoxes>
-            <interests/>
-            <projects/>
+            <interests>
+                <Interest>
+                    <content>Ben&amp;#39;s interest number 1</content>
+                </Interest>
+                <Interest>
+                    <content>Ben&amp;#39;s interest number 2</content>
+                </Interest>
+                <Interest>
+                    <content>Ben&amp;#39;s interest number 3</content>
+                </Interest>
+            </interests>
+            <projects>
+                <Project>
+                    <content>Ben&amp;#39;s interest number 1</content>
+                </Project>
+                <Project>
+                    <content>Ben&amp;#39;s interest number 2</content>
+                </Project>
+                <Project>
+                    <content>Ben&amp;#39;s interest number 3</content>
+                </Project>
+            </projects>
         </Member>
         <Member id="a3bd3f4a-0b96-4286-97dd-4da5c70eccde">
             <firstName>Chris</firstName>
@@ -86,8 +143,28 @@
                 <messageBox>2723f934-2474-42b5-a4d1-3fd19abed8a6</messageBox>
                 <messageBox>7e50bc40-9f1c-4f22-8fe4-435211152458</messageBox>
             </messageBoxes>
-            <interests/>
-            <projects/>
+            <interests>
+                <Interest>
+                    <content>Chris&amp;#39;s interest number 1</content>
+                </Interest>
+                <Interest>
+                    <content>Chris&amp;#39;s interest number 2</content>
+                </Interest>
+                <Interest>
+                    <content>Chris&amp;#39;s interest number 3</content>
+                </Interest>
+            </interests>
+            <projects>
+                <Project>
+                    <content>Chris&amp;#39;s interest number 1</content>
+                </Project>
+                <Project>
+                    <content>Chris&amp;#39;s interest number 2</content>
+                </Project>
+                <Project>
+                    <content>Chris&amp;#39;s interest number 3</content>
+                </Project>
+            </projects>
         </Member>
         <Member id="28c92515-ddee-4cb0-800e-df993145e7a7">
             <firstName>David</firstName>
@@ -99,8 +176,28 @@
                 <messageBox>e60b6b3f-618a-45f7-9055-ae6602297e18</messageBox>
                 <messageBox>8aafcacb-1f58-45b5-961e-5b534e1985ec</messageBox>
             </messageBoxes>
-            <interests/>
-            <projects/>
+            <interests>
+                <Interest>
+                    <content>David&amp;#39;s interest number 1</content>
+                </Interest>
+                <Interest>
+                    <content>David&amp;#39;s interest number 2</content>
+                </Interest>
+                <Interest>
+                    <content>David&amp;#39;s interest number 3</content>
+                </Interest>
+            </interests>
+            <projects>
+                <Project>
+                    <content>David&amp;#39;s interest number 1</content>
+                </Project>
+                <Project>
+                    <content>David&amp;#39;s interest number 2</content>
+                </Project>
+                <Project>
+                    <content>David&amp;#39;s interest number 3</content>
+                </Project>
+            </projects>
         </Member>
         <Member id="cc9aba69-8262-43f8-bedc-b1ee123065d3">
             <firstName>Elizabeth</firstName>
@@ -112,8 +209,28 @@
                 <messageBox>0f072e3f-9623-49fe-b3e8-19949abd8e8f</messageBox>
                 <messageBox>6e1e8a4b-ec8a-4a25-97e4-2362ae2b824d</messageBox>
             </messageBoxes>
-            <interests/>
-            <projects/>
+            <interests>
+                <Interest>
+                    <content>Elizabeth&amp;#39;s interest number 1</content>
+                </Interest>
+                <Interest>
+                    <content>Elizabeth&amp;#39;s interest number 2</content>
+                </Interest>
+                <Interest>
+                    <content>Elizabeth&amp;#39;s interest number 3</content>
+                </Interest>
+            </interests>
+            <projects>
+                <Project>
+                    <content>Elizabeth&amp;#39;s interest number 1</content>
+                </Project>
+                <Project>
+                    <content>Elizabeth&amp;#39;s interest number 2</content>
+                </Project>
+                <Project>
+                    <content>Elizabeth&amp;#39;s interest number 3</content>
+                </Project>
+            </projects>
         </Member>
     </members>
     <messages>
@@ -124,6 +241,7 @@
                 <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -135,6 +253,7 @@
                 <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -146,6 +265,7 @@
                 <recipient>ed93a4e7-642c-4a10-87c5-3e497e077e5b</recipient>
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>d741a462-9b58-460d-b6e7-187276a86d26</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -157,6 +277,7 @@
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -168,6 +289,7 @@
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -179,6 +301,7 @@
                 <recipient>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</recipient>
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>ed93a4e7-642c-4a10-87c5-3e497e077e5b</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -190,6 +313,7 @@
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
                 <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -201,6 +325,7 @@
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
                 <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
             <status>NEW</status>
             <title>sample title</title>
@@ -212,10 +337,42 @@
                 <recipient>28c92515-ddee-4cb0-800e-df993145e7a7</recipient>
                 <recipient>cc9aba69-8262-43f8-bedc-b1ee123065d3</recipient>
             </recipients>
+            <sendDate>2011-09-25T00:00:00+01:00</sendDate>
             <sender>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</sender>
             <status>NEW</status>
             <title>sample title</title>
         </Message>
     </messages>
-    <callbacks/>
+    <callbacks>
+        <Callback id="f3530ec3-2c48-489a-9fa0-e9e08e9764e6">
+            <expiryDate>2011-09-25T00:00:00+01:00</expiryDate>
+            <subject>d741a462-9b58-460d-b6e7-187276a86d26</subject>
+            <type>PASSWORD_RESET</type>
+            <used>false</used>
+        </Callback>
+        <Callback id="41e85d5c-7dbf-428d-bd81-4acb1d3bb390">
+            <expiryDate>2011-09-25T00:00:00+01:00</expiryDate>
+            <subject>ed93a4e7-642c-4a10-87c5-3e497e077e5b</subject>
+            <type>PASSWORD_RESET</type>
+            <used>false</used>
+        </Callback>
+        <Callback id="bfa2ef11-87ff-4c44-a58d-87ecf69b3737">
+            <expiryDate>2011-09-25T00:00:00+01:00</expiryDate>
+            <subject>a3bd3f4a-0b96-4286-97dd-4da5c70eccde</subject>
+            <type>PASSWORD_RESET</type>
+            <used>false</used>
+        </Callback>
+        <Callback id="7f053773-588c-491d-a6e7-b74eef72a235">
+            <expiryDate>2011-09-25T00:00:00+01:00</expiryDate>
+            <subject>28c92515-ddee-4cb0-800e-df993145e7a7</subject>
+            <type>PASSWORD_RESET</type>
+            <used>false</used>
+        </Callback>
+        <Callback id="229ba40b-45dc-46f6-a296-1e9a8e2e93ba">
+            <expiryDate>2011-09-25T00:00:00+01:00</expiryDate>
+            <subject>cc9aba69-8262-43f8-bedc-b1ee123065d3</subject>
+            <type>PASSWORD_RESET</type>
+            <used>false</used>
+        </Callback>
+    </callbacks>
 </BackUp>
