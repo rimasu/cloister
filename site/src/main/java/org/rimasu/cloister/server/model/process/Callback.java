@@ -1,4 +1,4 @@
-package org.rimasu.cloister.server.model.event;
+package org.rimasu.cloister.server.model.process;
 
 import java.util.Calendar;
 import java.util.List;

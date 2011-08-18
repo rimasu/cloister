@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.rimasu.cloister.server.backup.Snapshot;
+
 import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.auth.Role;
 import org.rimasu.cloister.server.model.core.BlockText;
@@ -15,8 +15,8 @@ import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
 import org.rimasu.cloister.server.model.core.Message.Status;
 import org.rimasu.cloister.server.model.core.MessageBox;
-import org.rimasu.cloister.server.model.event.Callback;
-import org.rimasu.cloister.server.model.event.Callback.Type;
+import org.rimasu.cloister.server.model.process.Callback;
+import org.rimasu.cloister.server.model.process.Callback.Type;
 
 public class Fixture {
 

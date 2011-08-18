@@ -1,4 +1,4 @@
-package org.rimasu.cloister.server.backup;
+package org.rimasu.cloister.server.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +18,7 @@ import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
 import org.rimasu.cloister.server.model.core.MessageBox;
-import org.rimasu.cloister.server.model.event.Callback;
+import org.rimasu.cloister.server.model.process.Callback;
 
 /**
  * Snapshot contains the entire state of the model. This is used as the root

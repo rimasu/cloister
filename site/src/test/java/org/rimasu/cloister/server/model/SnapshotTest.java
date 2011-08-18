@@ -1,4 +1,4 @@
-package org.rimasu.cloister.server.backup;
+package org.rimasu.cloister.server.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -31,9 +31,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.junit.Test;
-import org.rimasu.cloister.server.backup.Snapshot;
-import org.rimasu.cloister.server.model.EntityTest;
-import org.rimasu.cloister.server.model.Fixture;
+import org.rimasu.cloister.server.model.Snapshot;
 import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
