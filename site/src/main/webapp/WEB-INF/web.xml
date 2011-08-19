@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
             http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+            
 	<servlet>
 		<servlet-name>CloisterService</servlet-name>
 		<servlet-class>
@@ -29,7 +30,7 @@
 
 	<servlet-mapping>
 		<servlet-name>requestFactoryServlet</servlet-name>
-		<url-pattern>/gwtRequest</url-pattern>
+		<url-pattern>/org.rimasu.cloister.Cloister/gwtRequest</url-pattern>
 	</servlet-mapping>
 
 </web-app>

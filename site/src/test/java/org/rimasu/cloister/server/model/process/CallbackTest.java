@@ -1,4 +1,4 @@
-package org.rimasu.cloister.server.model.event;
+package org.rimasu.cloister.server.model.process;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

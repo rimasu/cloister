@@ -11,9 +11,6 @@ import com.google.web.bindery.requestfactory.shared.Service;
 @Service(Member.class)
 public interface MemberRequest extends RequestContext  {
 
-	Request<MemberProxy> find(String id);
-	
 	Request<List<MemberProxy>> findAll();
-	
 	
 }

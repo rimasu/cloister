@@ -24,21 +24,21 @@ import org.rimasu.cloister.server.model.process.Callback;
  * Snapshot contains the entire state of the model. This is used as the root
  * element when generating or parsing XML.
  */
-@XmlType(name = "", propOrder = { "captureDate","principals", "messageBoxes", "members", "messages", "callbacks" })
+@XmlType(name = "", propOrder = { "captureDate", "principals", "messageBoxes",
+		"members", "messages", "callbacks" })
 @XmlRootElement(name = "BackUp")
 public class Snapshot {
-	
+
 	/**
 	 * The date the snapshot was taken.
-	 */	
+	 */
 	private Calendar captureDate;
-	
+
 	/**
 	 * All the principals.
 	 */
 	private List<Principal> principals;
 
-	
 	/**
 	 * All the message boxes.
 	 */
@@ -53,7 +53,7 @@ public class Snapshot {
 	 * All the mesages.
 	 */
 	private List<Message> messages;
-	
+
 	/**
 	 * All the callbacks.
 	 */
@@ -66,23 +66,33 @@ public class Snapshot {
 	 */
 	public Snapshot() {
 		messageBoxes = new ArrayList<MessageBox>();
-		members = new ArrayList<Member>();		
+		members = new ArrayList<Member>();
 		messages = new ArrayList<Message>();
 		principals = new ArrayList<Principal>();
 		callbacks = new ArrayList<Callback>();
 	}
-	
+
+	public static Snapshot create(EntityManager manager) {
+		Snapshot result = new Snapshot();
+		result.setCaptureDate(Calendar.getInstance());
+		result.setPrincipals(Principal.findAll(manager));
+		result.setMembers(Member.findAllInternal(manager));
+		result.setMessageBoxes(MessageBox.findAll(manager));
+		result.setMessages(Message.findAll(manager));
+		result.setCallbacks(Callback.findAll(manager));
+		return result;
+	}
+
 	@NotNull
-	@XmlSchemaType(name="date")
+	@XmlSchemaType(name = "date")
 	@XmlAttribute
 	public Calendar getCaptureDate() {
 		return captureDate;
 	}
-	
-	public void setCaptureDate(Calendar captureDate){
+
+	public void setCaptureDate(Calendar captureDate) {
 		this.captureDate = captureDate;
 	}
-
 
 	@Valid
 	@XmlElementWrapper(name = "members")
@@ -139,30 +149,25 @@ public class Snapshot {
 		this.callbacks = callbacks;
 	}
 
-	public static Snapshot create(EntityManager manager) {		
-		Snapshot result = new Snapshot();		
-		result.setPrincipals(Principal.findAll(manager));
-		result.setMembers(Member.findAll(manager));
-		result.setMessageBoxes(MessageBox.findAll(manager));
-		result.setMessages(Message.findAll(manager));
-		result.setCallbacks(Callback.findAll(manager));
-		return result;
+	public void persistTo(EntityManager manager) {
+		persistTo(manager, principals);
+		persistTo(manager, messageBoxes);
+		persistTo(manager, members);
+		persistTo(manager, messages);
+		persistTo(manager, callbacks);
 	}
 
-	public void persistTo(EntityManager manager) {
-		persistTo(manager,principals);
-		persistTo(manager,messageBoxes);
-		persistTo(manager,members);
-		persistTo(manager,messages);
-		persistTo(manager,callbacks);
-	}
-	
-	private <T> void persistTo(EntityManager manager, List<T> entities){
-		for(T entity : entities)
-		{
+	private <T> void persistTo(EntityManager manager, List<T> entities) {
+		for (T entity : entities) {
 			manager.persist(entity);
 		}
 	}
 
-
+	@Override
+	public String toString() {
+		StringBuilder bld = new StringBuilder();
+		bld.append("Snapshot@");
+		bld.append(captureDate.getTimeInMillis());
+		return bld.toString();
+	}
 }

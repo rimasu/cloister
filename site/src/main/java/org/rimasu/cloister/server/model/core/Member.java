@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlType;
 
 import org.rimasu.cloister.server.model.AbstractEntity;
+import org.rimasu.cloister.server.model.Fixture;
 import org.rimasu.cloister.server.model.auth.Principal;
 
 /**
@@ -164,17 +165,21 @@ public class Member extends AbstractEntity {
 		this.projects = projects;
 	}
 
-	public static Member find(String id) {
+	public static Member findMember(String id) {
 		return null;
 	}
 
-	public static List<Member> findAll() {
-		return new ArrayList<Member>();
-	}
+
 
 	@SuppressWarnings("unchecked")
-	public static List<Member> findAll(EntityManager manager) {
+	public static List<Member> findAllInternal(EntityManager manager) {
 		Query query = manager.createQuery("SELECT e FROM Member e");
 		return (List<Member>) query.getResultList();
+	}
+	
+	public static List<Member> findAll() {
+		ArrayList<Member> result = new ArrayList<Member>();
+		result.add(Fixture.createMember());
+		return result;
 	}
 }

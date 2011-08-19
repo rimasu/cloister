@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Request;
 
 public class EntryPointImpl implements EntryPoint {
 
@@ -29,7 +30,7 @@ public class EntryPointImpl implements EntryPoint {
 		CloisterRequestFactory requestFactory = (CloisterRequestFactory) GWT
 				.create(CloisterRequestFactory.class);
 		requestFactory.initialize(eventBus);
-
+		GWT.log("Request Factory Initialized");
 		testPingRequestFactory(requestFactory);
 
 		GWT.log("Cloister module started.");
@@ -37,11 +38,15 @@ public class EntryPointImpl implements EntryPoint {
 
 	private void testPingRequestFactory(CloisterRequestFactory requestFactory) {
 		MemberRequest request = requestFactory.memberRequest();
+		
 		request.findAll().fire(new Receiver<List<MemberProxy>>() {
 			@Override
 			public void onSuccess(List<MemberProxy> response) {
-				for (MemberProxy proxy : response) {
+				GWT.log("Member Count" + response.size());	
+				for(MemberProxy proxy : response)
+				{
 					GWT.log(proxy.getFirstName());
+					GWT.log(proxy.getId());
 				}
 			}
 		});
@@ -49,7 +54,6 @@ public class EntryPointImpl implements EntryPoint {
 
 	private void testPingService() {
 		service.testFunc(new AsyncCallback<String>() {
-
 			@Override
 			public void onSuccess(String result) {
 				GWT.log(result);

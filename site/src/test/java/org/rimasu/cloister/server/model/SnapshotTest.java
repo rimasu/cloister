@@ -10,6 +10,8 @@ import java.io.StringWriter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -137,10 +139,16 @@ public class SnapshotTest extends EntityTest {
 	public void canExtractSnapshotFromEntityManager() throws SQLException,
 			DatabaseUnitException {
 		EntityManager manager = createEntityManager();
-		populateDataBase("backup.dbunit.xml");		
+		populateDataBase("backup.dbunit.xml");
 		Snapshot snapshot = Snapshot.create(manager);
 		assertNotNull(snapshot.getCaptureDate());
 		System.out.println(snapshot);
+	}
+
+	@Test
+	public void toStringContainsCaptureDate() {
+		String actual = Fixture.createSnapshot().toString();
+		assertThat(actual, is("Snapshot@1316905200000"));
 	}
 
 	private void populateDataBase(String initialContents) throws SQLException,
@@ -148,7 +156,7 @@ public class SnapshotTest extends EntityTest {
 		createFreshConnection();
 		try {
 			IDataSet template = loadDataSetFromClassPath(initialContents);
-			DatabaseOperation.INSERT.execute(connection, template);
+			DatabaseOperation.CLEAN_INSERT.execute(connection, template);
 		} finally {
 			disconnect();
 		}
