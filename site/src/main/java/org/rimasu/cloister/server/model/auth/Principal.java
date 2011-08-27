@@ -130,8 +130,8 @@ public class Principal {
 		this.roles = roles;
 	}
 
-	public static Principal find(String username) {
-		return null;
+	public static Principal find(EntityManager manager, String username) {
+		return manager.find(Principal.class, username);
 	}
 
 	/**

@@ -1,12 +1,18 @@
 package org.rimasu.cloister.server.model;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.jar.JarException;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -70,6 +76,29 @@ public class Snapshot {
 		messages = new ArrayList<Message>();
 		principals = new ArrayList<Principal>();
 		callbacks = new ArrayList<Callback>();
+	}
+
+	/**
+	 * contextPath Load a snapshot from a URL.
+	 * 
+	 * @param url
+	 *            the url to load the snapshot from.
+	 * @return snapshot.
+	 * 
+	 * @throws IOException
+	 *             if failed to load URL.
+	 */
+	public static Snapshot load(URL url) throws IOException {
+		try {
+			JAXBContext context = JAXBContext
+					.newInstance("org.rimasu.cloister.server.model");
+
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			return (Snapshot) unmarshaller.unmarshal(url);
+		} catch (JAXBException e) {
+			throw new IOException(e);
+		}
 	}
 
 	public static Snapshot create(EntityManager manager) {

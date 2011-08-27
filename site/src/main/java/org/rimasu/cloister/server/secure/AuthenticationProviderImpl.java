@@ -1,8 +1,13 @@
 package org.rimasu.cloister.server.secure;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+
+import org.rimasu.cloister.server.model.ModelLoader;
+import org.rimasu.cloister.server.model.auth.Principal;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,19 +31,38 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
 		String username = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 
-		if (users.get(username) == null)
-			throw new UsernameNotFoundException("User not found");
+		EntityManager manager = null;
+		try {
+			try {
+				manager = ModelLoader.getContext();
+			} catch (IOException e) {
+				// possibly should add some king of authentication
+				// exception here (it also extends runtime).
+				throw new RuntimeException(e);
+			}
 
-		String storedPass = users.get(username);
+			Principal principal = Principal.find(manager, username);
 
-		if (!storedPass.equals(password))
-			throw new BadCredentialsException("Invalid password");
+			if (principal == null) {
+				throw new UsernameNotFoundException("User not found");
+			}
 
-		Authentication customAuthentication = new AuthenticationImpl(
-				"ROLE_USER", authentication);
-		customAuthentication.setAuthenticated(true);
+			if (principal.checkPassword(password)) {
+				Authentication customAuthentication = new AuthenticationImpl(
+						"ROLE_USER", authentication);
+				customAuthentication.setAuthenticated(true);
 
-		return customAuthentication;
+				return customAuthentication;
+
+			} else {
+				throw new BadCredentialsException("Invalid password");
+			}
+
+		} finally {
+			if (manager != null) {
+				manager.close();
+			}
+		}
 
 	}
 
