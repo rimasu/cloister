@@ -9,5 +9,8 @@ public interface MemberEditPanel extends IsWidget {
 	}
 
 	void setPresenter(Presenter editMemberActivity);
+	
+	
+	
 
 }

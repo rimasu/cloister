@@ -16,6 +16,10 @@ public class DisplayMemberPlace extends Place {
 	public DisplayMemberPlace(String id) {
 		this.id = id;
 	}
+	
+	public String getId() {
+		return id;
+	}
 
 	public static class Tokenizer implements PlaceTokenizer<DisplayMemberPlace> {
 		@Override
@@ -28,4 +32,6 @@ public class DisplayMemberPlace extends Place {
 			return new DisplayMemberPlace(token);
 		}
 	}
+
+
 }

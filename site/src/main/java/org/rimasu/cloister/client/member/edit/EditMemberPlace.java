@@ -11,6 +11,10 @@ public class EditMemberPlace extends Place {
 		this.id = id;
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	public static class Tokenizer implements PlaceTokenizer<EditMemberPlace> {
 		@Override
 		public String getToken(EditMemberPlace place) {

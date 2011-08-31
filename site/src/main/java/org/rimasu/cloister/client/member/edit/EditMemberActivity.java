@@ -1,12 +1,11 @@
 package org.rimasu.cloister.client.member.edit;
 
-import org.rimasu.cloister.client.UiInjector;
-import org.rimasu.cloister.client.support.MemberProxy;
-
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.inject.Inject;
 
 /**
  * Display Member Activity.
@@ -14,25 +13,25 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 public class EditMemberActivity extends AbstractActivity implements
 		MemberEditPanel.Presenter {
 	
-	private final UiInjector injector = GWT.create(UiInjector.class);
-
-	
-	/**
-	 * Proxy providing access to the member being displayed.
-	 */
-	private MemberProxy member;
-
-
 	private MemberEditPanel panel;
+	
+	private String memberId;
 
-	public EditMemberActivity(MemberProxy member) {
-		this.member = member;
+	@Inject
+	public EditMemberActivity(MemberEditPanel panel) {
+		this.panel = panel;
+	}
+	
+	public Activity withPlace(Place place) {
+		this.memberId = ((EditMemberPlace)place).getId();
+		return this;
 	}
 
 	@Override
-	public void start(AcceptsOneWidget parent, EventBus eventBus) {
-		panel = injector.getMemberEditPanel();
+	public void start(AcceptsOneWidget parent, EventBus eventBus) {		
 		panel.setPresenter(this);
 		parent.setWidget(panel);
 	}
+
+	
 }

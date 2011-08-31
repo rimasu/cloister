@@ -6,8 +6,7 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		Hello, this is the application panel.
-		<g:Button styleName="{style.important}" ui:field="button" />
+	<g:HTMLPanel>			
+		<g:SimplePanel ui:field="entityPanel" />
 	</g:HTMLPanel>
 </ui:UiBinder> 
