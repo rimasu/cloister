@@ -6,8 +6,7 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>			
-		<g:Label ui:field="firstNameLabel" />
-		<g:Label ui:field="surnameLabel" />
+	<g:HTMLPanel>				
+		<h2><g:Label ui:field="firstNameLabel" /> <g:Label ui:field="surnameLabel" /></h2>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -35,16 +35,16 @@ import org.rimasu.cloister.server.model.auth.Principal;
  * other members (and likely every other UUID). The UUID should never be exposed
  * via a user interface.
  */
-@XmlType(name = "", propOrder = { "firstName", "surname", "principal", "inbox",
+@XmlType(name = "", propOrder = { "firstName", "surname", "principal",  "inbox",
 		"sentItems", "messageBoxes", "interests", "projects" })
 @Entity
-@Table(name="MEMBERS")
+@Table(name = "MEMBERS")
 public class Member extends AbstractEntity {
 
 	private String firstName;
 
 	private String surname;
-
+	
 	private Principal principal;
 
 	private MessageBox inbox;
@@ -102,6 +102,7 @@ public class Member extends AbstractEntity {
 	public void setPrincipal(Principal principal) {
 		this.principal = principal;
 	}
+
 
 	@XmlIDREF
 	@OneToOne
@@ -169,14 +170,12 @@ public class Member extends AbstractEntity {
 		return null;
 	}
 
-
-
 	@SuppressWarnings("unchecked")
 	public static List<Member> findAllInternal(EntityManager manager) {
 		Query query = manager.createQuery("SELECT e FROM Member e");
 		return (List<Member>) query.getResultList();
 	}
-	
+
 	public static List<Member> findAll() {
 		ArrayList<Member> result = new ArrayList<Member>();
 		result.add(Fixture.createMember());

@@ -6,12 +6,14 @@ import org.rimasu.cloister.client.member.view.DisplayMemberActivity;
 import org.rimasu.cloister.client.member.view.DisplayMemberPlace;
 import org.rimasu.cloister.client.member.view.MemberDisplayPanel;
 import org.rimasu.cloister.client.site.ApplicationPanel;
+import org.rimasu.cloister.client.support.CloisterRequestFactory;
 import org.rimasu.cloister.client.ui.ApplicationPanelImpl;
 import org.rimasu.cloister.client.ui.MemberDisplayPanelImpl;
 import org.rimasu.cloister.client.ui.MemberEditPanelImpl;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -27,12 +29,21 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-		bind(PlaceController.class).to(PlaceControllerImpl.class).in(
+
+		bind(PlaceHistoryMapper.class).to(ApplicationPlaceHistoryMapper.class)
+				.in(Singleton.class);
+
+		bind(ActivityMapper.class).to(ApplicationActivityMapper.class).in(
 				Singleton.class);
+
 		bind(ApplicationPanel.class).to(ApplicationPanelImpl.class);
+
 		bind(MemberDisplayPanel.class).to(MemberDisplayPanelImpl.class);
+
 		bind(MemberEditPanel.class).to(MemberEditPanelImpl.class);
+
 		bind(EditMemberActivity.class);
+
 		bind(DisplayMemberActivity.class);
 	}
 
@@ -41,11 +52,22 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	public PlaceHistoryHandler getHistoryHandler(
 			PlaceController placeController, PlaceHistoryMapper historyMapper,
 			EventBus eventBus, ActivityManager activityManager) {
+
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(
 				historyMapper);
 		historyHandler.register(placeController, eventBus,
 				new DisplayMemberPlace(""));
+
 		return historyHandler;
+	}
+
+	@Provides
+	@Singleton
+	public CloisterRequestFactory getRequestFactory(EventBus eventBus) {
+		final CloisterRequestFactory requestFactory = GWT
+				.create(CloisterRequestFactory.class);
+		requestFactory.initialize(eventBus);
+		return requestFactory;
 	}
 
 	@Provides
@@ -57,9 +79,8 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	@Provides
 	@Singleton
 	public ActivityManager getActivityManager(ActivityMapper mapper,
-			EventBus eventBus, HasOneWidget display) {
+			EventBus eventBus) {
 		ActivityManager activityManager = new ActivityManager(mapper, eventBus);
-		activityManager.setDisplay(display);
 		return activityManager;
 	}
 

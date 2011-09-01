@@ -16,6 +16,8 @@ public interface MemberProxy extends EntityProxy {
 	Integer getVersion();	
 
 	String getFirstName();
+	
+	String getSurname();
 
 	MessageBoxProxy getInbox();
 

@@ -33,20 +33,25 @@ public class Application {
 
 	private final PlaceController placeController;
 
-	private PlaceHistoryMapper placeHistoryMapper;
+	private final ActivityManager activityManager;
+	
+	private final PlaceHistoryHandler historyHandler;
 
 	@Inject
 	public Application(
 			ApplicationPanel panel,
 			EventBus eventBus,
 			PlaceController placeController,
-			PlaceHistoryMapper placeHistoryMapper
+			ActivityManager activityManager,
+			PlaceHistoryHandler historyHandler
+			
 			) {
 		super();
 		this.panel = panel;
 		this.eventBus = eventBus;
-		this.placeController = placeController;	
-		this.placeHistoryMapper = placeHistoryMapper;
+		this.placeController = placeController;			
+		this.activityManager = activityManager;
+		this.historyHandler = historyHandler;
 	}
 
 	public void start() {
@@ -66,21 +71,14 @@ public class Application {
 		
 
         // Start ActivityManager for the main widget with our ActivityMapper
-        ActivityMapper activityMapper = new ApplicationActivityMapper();
-        ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
         activityManager.setDisplay(panel.getEntityPanel());
 
 		
-		  // Start PlaceHistoryHandler with our PlaceHistoryMapper
-        ApplicationPlaceHistoryMapper historyMapper= GWT.create(ApplicationPlaceHistoryMapper.class);
-        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
-        historyHandler.register(placeController, eventBus, new DisplayMemberPlace(""));
-
         
         RootLayoutPanel.get().add(panel);
-		
-		
-		historyHandler.handleCurrentHistory();
+				
+        historyHandler.handleCurrentHistory();
+        
 		placeController.goTo(new DisplayMemberPlace("d741a462-9b58-460d-b6e7-187276a86d26"));
 
 	}
