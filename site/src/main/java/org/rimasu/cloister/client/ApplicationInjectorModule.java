@@ -28,6 +28,7 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
+		GWT.log("configuring injector module");
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 
 		bind(PlaceHistoryMapper.class).to(ApplicationPlaceHistoryMapper.class)
@@ -51,8 +52,8 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	@Singleton
 	public PlaceHistoryHandler getHistoryHandler(
 			PlaceController placeController, PlaceHistoryMapper historyMapper,
-			EventBus eventBus, ActivityManager activityManager) {
-
+			EventBus eventBus, ActivityManager activityManager) {		
+		GWT.log("configuring history handler");
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(
 				historyMapper);
 		historyHandler.register(placeController, eventBus,
@@ -63,7 +64,8 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 
 	@Provides
 	@Singleton
-	public CloisterRequestFactory getRequestFactory(EventBus eventBus) {
+	public CloisterRequestFactory getRequestFactory(EventBus eventBus) {		
+		GWT.log("configuring request factory");		
 		final CloisterRequestFactory requestFactory = GWT
 				.create(CloisterRequestFactory.class);
 		requestFactory.initialize(eventBus);
@@ -73,6 +75,7 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	@Provides
 	@Singleton
 	public PlaceController getPlaceController(EventBus eventBus) {
+		GWT.log("configuring place controller");
 		return new PlaceController(eventBus);
 	}
 
@@ -80,6 +83,7 @@ public class ApplicationInjectorModule extends AbstractGinModule {
 	@Singleton
 	public ActivityManager getActivityManager(ActivityMapper mapper,
 			EventBus eventBus) {
+		GWT.log("configuring activity manager");
 		ActivityManager activityManager = new ActivityManager(mapper, eventBus);
 		return activityManager;
 	}

@@ -20,6 +20,11 @@ public class DisplayMemberPlace extends Place {
 	public String getId() {
 		return id;
 	}
+	
+	
+	public String toString(){
+		return String.format("DisplayMemberPlace(%s)", getId());
+	}
 
 	public static class Tokenizer implements PlaceTokenizer<DisplayMemberPlace> {
 		@Override

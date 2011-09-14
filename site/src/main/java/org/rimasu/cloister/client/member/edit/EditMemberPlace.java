@@ -14,6 +14,10 @@ public class EditMemberPlace extends Place {
 	public String getId() {
 		return id;
 	}
+	
+	public String toString(){
+		return String.format("EditMemberPlace(%s)", getId());
+	}
 
 	public static class Tokenizer implements PlaceTokenizer<EditMemberPlace> {
 		@Override

@@ -13,15 +13,19 @@
     
      
     <authentication-manager alias="authenticationManager">
+    
      <authentication-provider ref="customAuthenticationProvider"/>
+     
  </authentication-manager>
  
+ 	
  
- <http auto-config="true">
-        <intercept-url pattern="/gwtspringsecurityproject/**" access="ROLE_USER"/>
+ 	<http auto-config="true">
+       <!--  <intercept-url pattern="/gwtspringsecurityproject/**" access="ROLE_USER"/>
         <intercept-url pattern="/gwt/**" access="ROLE_USER"/>
         <intercept-url pattern="/**/*.html" access="ROLE_USER"/>
-        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->        
+        <form-login login-page="/login.html" />
     </http> 
      
         
