@@ -137,10 +137,10 @@ public class SnapshotTest extends EntityTest {
 
 	@Test
 	public void canExtractSnapshotFromEntityManager() throws SQLException,
-			DatabaseUnitException {
-		EntityManager manager = createEntityManager();
+			DatabaseUnitException, IOException {
+		createEntityManager();
 		populateDataBase("backup.dbunit.xml");
-		Snapshot snapshot = Snapshot.create(manager);
+		Snapshot snapshot = Snapshot.create();
 		assertNotNull(snapshot.getCaptureDate());
 		System.out.println(snapshot);
 	}

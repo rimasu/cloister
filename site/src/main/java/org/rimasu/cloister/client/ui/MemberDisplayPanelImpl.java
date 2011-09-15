@@ -2,8 +2,8 @@ package org.rimasu.cloister.client.ui;
 
 import java.util.List;
 
-import org.rimasu.cloister.client.member.view.MemberDisplayPanel;
-import org.rimasu.cloister.client.member.view.MemberDisplayPanel.Presenter;
+import org.rimasu.cloister.client.member.display.MemberDisplayPanel;
+import org.rimasu.cloister.client.member.display.MemberDisplayPanel.Presenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

@@ -3,7 +3,6 @@ package org.rimasu.cloister.server.model.core;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -22,7 +21,6 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 
 import org.rimasu.cloister.server.model.AbstractEntity;
-
 
 @Entity
 @Table(name="MESSAGES")
@@ -127,12 +125,4 @@ public class Message extends AbstractEntity  {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
-	@SuppressWarnings("unchecked")
-	public static List<Message> findAll(EntityManager manager) {
-		Query query = manager.createQuery("SELECT e FROM Message e");
-		return (List<Message>) query.getResultList();
-	}
-
 }

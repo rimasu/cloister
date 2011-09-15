@@ -16,7 +16,7 @@ public class EditMemberPlace extends Place {
 	}
 	
 	public String toString(){
-		return String.format("EditMemberPlace(%s)", getId());
+		return "edit-member-place-" + id;
 	}
 
 	public static class Tokenizer implements PlaceTokenizer<EditMemberPlace> {

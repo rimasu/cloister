@@ -2,7 +2,7 @@ package org.rimasu.cloister.client;
 
 import java.util.List;
 
-import org.rimasu.cloister.client.member.view.DisplayMemberPlace;
+import org.rimasu.cloister.client.member.display.DisplayMemberPlace;
 import org.rimasu.cloister.client.site.ApplicationPanel;
 import org.rimasu.cloister.client.support.CloisterRequestFactory;
 import org.rimasu.cloister.client.support.CloisterService;

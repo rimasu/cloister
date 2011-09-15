@@ -87,10 +87,5 @@ public class Callback extends AbstractEntity {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	public static List<Callback> findAll(EntityManager manager) {
-		Query query = manager.createQuery("SELECT e FROM Callback e");
-		return (List<Callback>) query.getResultList();
-	}
 
 }

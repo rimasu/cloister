@@ -1,4 +1,4 @@
-package org.rimasu.cloister.client.member.view;
+package org.rimasu.cloister.client.member.display;
 
 import org.rimasu.cloister.client.ProxyReciever;
 import org.rimasu.cloister.client.ProxyTarget;
@@ -54,7 +54,7 @@ public class DisplayMemberActivity extends AbstractActivity implements
 		panel.setPresenter(this);
 		parent.setWidget(panel);
 		MemberRequest request = requestFactory.memberRequest();
-		Request<MemberProxy> findRequest = request.findMember(memberId);
+		Request<MemberProxy> findRequest = request.find(memberId);
 		findRequest.fire(new ProxyReciever<MemberProxy>(this));
 	}
 

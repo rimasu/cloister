@@ -1,4 +1,4 @@
-package org.rimasu.cloister.client.member.view;
+package org.rimasu.cloister.client.member.display;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
@@ -21,9 +21,8 @@ public class DisplayMemberPlace extends Place {
 		return id;
 	}
 	
-	
 	public String toString(){
-		return String.format("DisplayMemberPlace(%s)", getId());
+		return "display-member-place-" + id;
 	}
 
 	public static class Tokenizer implements PlaceTokenizer<DisplayMemberPlace> {

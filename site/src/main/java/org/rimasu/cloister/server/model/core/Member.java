@@ -170,15 +170,4 @@ public class Member extends AbstractEntity {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<Member> findAllInternal(EntityManager manager) {
-		Query query = manager.createQuery("SELECT e FROM Member e");
-		return (List<Member>) query.getResultList();
-	}
-
-	public static List<Member> findAll() {
-		ArrayList<Member> result = new ArrayList<Member>();
-		result.add(Fixture.createMember());
-		return result;
-	}
 }

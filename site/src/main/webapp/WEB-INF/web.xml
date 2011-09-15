@@ -46,7 +46,7 @@
 
 	<servlet-mapping>
 		<servlet-name>requestFactoryServlet</servlet-name>
-		<url-pattern>/org.rimasu.cloister.Cloister/gwtRequest</url-pattern>
+		<url-pattern>/gwtRequest</url-pattern>
 	</servlet-mapping>
 	
 	

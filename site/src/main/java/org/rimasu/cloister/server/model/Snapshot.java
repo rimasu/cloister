@@ -24,6 +24,13 @@ import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.core.Member;
 import org.rimasu.cloister.server.model.core.Message;
 import org.rimasu.cloister.server.model.core.MessageBox;
+import org.rimasu.cloister.server.model.locator.CallbackService;
+import org.rimasu.cloister.server.model.locator.EntityService;
+import org.rimasu.cloister.server.model.locator.MemberService;
+import org.rimasu.cloister.server.model.locator.MessageBoxService;
+import org.rimasu.cloister.server.model.locator.MessageService;
+import org.rimasu.cloister.server.model.locator.PrincipalService;
+import org.rimasu.cloister.server.model.locator.ServiceLocatorImpl;
 import org.rimasu.cloister.server.model.process.Callback;
 
 /**
@@ -101,15 +108,20 @@ public class Snapshot {
 		}
 	}
 
-	public static Snapshot create(EntityManager manager) {
+	public static Snapshot create() throws IOException {
 		Snapshot result = new Snapshot();
 		result.setCaptureDate(Calendar.getInstance());
-		result.setPrincipals(Principal.findAll(manager));
-		result.setMembers(Member.findAllInternal(manager));
-		result.setMessageBoxes(MessageBox.findAll(manager));
-		result.setMessages(Message.findAll(manager));
-		result.setCallbacks(Callback.findAll(manager));
+		result.setPrincipals(readAllFrom(PrincipalService.class));
+		result.setMembers(readAllFrom(MemberService.class));
+		result.setMessageBoxes(readAllFrom(MessageBoxService.class));
+		result.setMessages(readAllFrom(MessageService.class));
+		result.setCallbacks(readAllFrom(CallbackService.class));
 		return result;
+	}
+
+	private static <E, S extends EntityService<E>> List<E> readAllFrom(
+			Class<S> serviceType) throws IOException {
+		return ServiceLocatorImpl.get(serviceType).findAll();
 	}
 
 	@NotNull

@@ -31,10 +31,4 @@ public class MessageBox extends AbstractEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static List<MessageBox> findAll(EntityManager manager) {
-		Query query = manager.createQuery("SELECT e FROM MessageBox e");
-		return (List<MessageBox>) query.getResultList();
-	}
 }

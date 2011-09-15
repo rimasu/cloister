@@ -1,6 +1,9 @@
 package org.rimasu.cloister.server.service;
 
+import java.io.IOException;
+
 import org.rimasu.cloister.client.support.CloisterService;
+import org.rimasu.cloister.server.model.locator.PrincipalService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -11,16 +14,11 @@ public class CloisterServiceImpl extends RemoteServiceServlet implements
 		CloisterService {
 
 	@Override
-	public String testFunc() {
-		Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
+	public String testFunc() throws IOException {
+		
+		PrincipalService service = new PrincipalService();
 
-		if (authentication == null) {
-			System.out.println("Not logged in");
-			return null;
-		} else {
-			return (String) authentication.getPrincipal();
-		}
+		return service.getCurrent().getUsername();
 	}
 
 }

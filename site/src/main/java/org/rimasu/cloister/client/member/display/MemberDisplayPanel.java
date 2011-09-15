@@ -1,4 +1,4 @@
-package org.rimasu.cloister.client.member.view;
+package org.rimasu.cloister.client.member.display;
 
 import java.util.List;
 
