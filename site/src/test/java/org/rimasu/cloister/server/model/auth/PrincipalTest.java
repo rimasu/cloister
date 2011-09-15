@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.rimasu.cloister.server.model.EntityTest;
 import org.rimasu.cloister.server.model.Fixture;
-import org.rimasu.cloister.server.model.auth.Principal;
 
 /**
  * Test unit for {@link Principal}.

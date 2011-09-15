@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.security.SecureRandom;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -14,7 +13,6 @@ import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.rimasu.cloister.server.model.auth.Principal;
 
 public class EntityTest {
 	

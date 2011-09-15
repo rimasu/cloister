@@ -8,7 +8,6 @@ import java.util.Calendar;
 import org.junit.Test;
 import org.rimasu.cloister.server.model.EntityTest;
 import org.rimasu.cloister.server.model.Fixture;
-import org.rimasu.cloister.server.model.process.Callback;
 
 /**
  * Test unit for callback.

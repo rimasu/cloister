@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.rimasu.cloister.server.model.EntityTest;
-import org.rimasu.cloister.server.model.core.BlockText;
 
 public class BlockTextTest extends EntityTest {
 	

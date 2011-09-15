@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.rimasu.cloister.server.model.AbstractEntity;
 
 public class AbstractEntityTest extends EntityTest {
 

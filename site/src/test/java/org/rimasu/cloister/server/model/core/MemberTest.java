@@ -4,30 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.dbunit.DatabaseUnitException;
-import org.dbunit.assertion.DbUnitAssert;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.rimasu.cloister.server.model.EntityTest;
 import org.rimasu.cloister.server.model.Fixture;
-import org.rimasu.cloister.server.model.core.BlockText;
-import org.rimasu.cloister.server.model.core.Member;
 
 /**
  * Test unit for {@link Member}.

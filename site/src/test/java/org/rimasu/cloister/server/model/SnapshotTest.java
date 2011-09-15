@@ -10,8 +10,6 @@ import java.io.StringWriter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,12 +29,8 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.Before;
 import org.junit.Test;
-import org.rimasu.cloister.server.model.Snapshot;
-import org.rimasu.cloister.server.model.auth.Principal;
 import org.rimasu.cloister.server.model.core.Member;
-import org.rimasu.cloister.server.model.core.Message;
 
 /**
  * Test Unit For Backup
