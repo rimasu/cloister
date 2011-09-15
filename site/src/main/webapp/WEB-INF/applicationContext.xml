@@ -20,11 +20,10 @@
  
  	
  
- 	<http auto-config="true">
-       <!--  <intercept-url pattern="/gwtspringsecurityproject/**" access="ROLE_USER"/>
-        <intercept-url pattern="/gwt/**" access="ROLE_USER"/>
-        <intercept-url pattern="/**/*.html" access="ROLE_USER"/>
-        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->        
+ 	<http auto-config="true">                 
+        <intercept-url pattern="/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY"  />
+        <intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY"  />               
+				<intercept-url pattern="/**/*" access="ROLE_USER"/>                                      
         <form-login login-page="/login.html" />
     </http> 
      

@@ -4,15 +4,14 @@
 <h1>Cloister Login</h1>
 <h3>Login with Username and Password</h3>
 
-<form action="j_spring_security_check">
+<form action="j_spring_security_check" method="POST">
 	<label for="j_username">Username</label>
-	<input type="text" name="j_username" id="j_username" <c:if test="${not empty param.login_error}">value='<%= session.getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY) %>'</c:if>/>
+	<input type="text" name="j_username" />
 	<br/>
 	<label for="j_password">Password</label>
-	<input type="password" name="j_password" id="j_password"/>
+	<input type="password" name="j_password"/>
 	<br/>
-	<input type='checkbox' name='_spring_security_remember_me'/> Remember me on this computer.
-	<br/>
+
 	<input type="submit" value="Login"/>
 </form>
 
